@@ -1,6 +1,6 @@
 import { less, swap, shuffle, medianOfThree } from "../common/utils.js";
 
-export class QuickSortHoare {
+export class QuickSort {
   static CUTOFF = 10;
 
   static select(seq, n) {
@@ -53,15 +53,16 @@ export class QuickSortHoare {
   }
 
   static _partition(arr, lo, hi) {
+    const pivot = arr[lo];
     let i = lo + 1;
     let j = hi;
     // terminate when i and j cross
     while (i <= j) {
       // stop on keys equal to pivot, or when i and j cross
-      while (less(arr, i, lo) && i <= j) {
+      while (less(arr[i], pivot) && i <= j) {
         i++;
       }
-      while (less(arr, lo, j)) {
+      while (less(pivot, arr[j])) {
         j--;
       }
       if (i > j) {
@@ -78,7 +79,7 @@ export class QuickSortHoare {
   }
 }
 
-export class QuickSort {
+export class QuickSort3Way {
   static sort(seq) {
     if (!Array.isArray(seq)) {
       return null;
@@ -109,13 +110,14 @@ export class QuickSort {
   }
 
   static _partition(arr, lo, hi) {
-    let i = lo;
+    const pivot = arr[lo];
     let lt = lo;
     let gt = hi;
+    let i = lo + 1;
     while (i <= gt) {
-      if (less(arr, i, lo)) {
+      if (less(arr[i], pivot)) {
         swap(arr, i++, lt++);
-      } else if (less(arr, lo, i)) {
+      } else if (less(pivot, arr[i])) {
         swap(arr, i, gt--);
       } else {
         i++;

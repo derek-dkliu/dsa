@@ -1,8 +1,8 @@
-export function less(arr, a, b, compareFn) {
+export function less(a, b, compareFn) {
   if (compareFn) {
-    return compareFn(arr[a], arr[b]) < 0;
+    return compareFn(a, b) < 0;
   } else {
-    return arr[a] < arr[b];
+    return a < b;
   }
 }
 
@@ -82,9 +82,9 @@ export function randomInt(min = 1, max = 100) {
 }
 
 export function medianOfThree(arr, lo, mid, hi) {
-  if (less(arr, mid, lo)) {
-    if (less(arr, hi, lo)) {
-      if (less(arr, hi, mid)) {
+  if (less(arr[mid], arr[lo])) {
+    if (less(arr[hi], arr[lo])) {
+      if (less(arr[hi], arr[mid])) {
         return mid;
       } else {
         return hi;
@@ -93,8 +93,8 @@ export function medianOfThree(arr, lo, mid, hi) {
       return lo;
     }
   } else {
-    if (less(arr, hi, mid)) {
-      if (less(arr, hi, lo)) {
+    if (less(arr[hi], arr[mid])) {
+      if (less(arr[hi], arr[lo])) {
         return lo;
       } else {
         return hi;

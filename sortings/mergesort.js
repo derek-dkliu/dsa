@@ -66,7 +66,7 @@ export default class MergeSort {
         arr[k] = aux[j++];
       } else if (j > hi) {
         arr[k] = aux[i++];
-      } else if (less(aux, j, i)) {
+      } else if (less(aux[j], aux[i])) {
         arr[k] = aux[j++];
       } else {
         arr[k] = aux[i++];

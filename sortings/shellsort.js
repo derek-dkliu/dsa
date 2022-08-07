@@ -15,7 +15,7 @@ export default class Shellsort {
       // do h-sort which is a generalization of insertion sort where h=1
       for (let i = h; i < len; i++) {
         for (let j = i; j >= h; j -= h) {
-          if (less(arr, j, j - h)) {
+          if (less(arr[j], arr[j - h])) {
             swap(arr, j, j - h);
           } else {
             break;
