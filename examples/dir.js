@@ -7,7 +7,7 @@ export function dir(path, parent = "", indent = 0) {
     console.log(fullpath, "not exits");
     return;
   }
-  if (path === ".git") {
+  if (path === ".git" || path === "node_modules") {
     return;
   }
   const indention =

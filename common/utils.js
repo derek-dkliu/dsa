@@ -21,6 +21,10 @@ export function shuffle(arr) {
   return arr;
 }
 
+export function sum(arr) {
+  return arr.reduce((acc, v) => acc + v, 0);
+}
+
 export function isSorted(arr) {
   for (let i = 1; i < arr.length; i++) {
     if (less(arr[i], arr[i - 1])) {
@@ -105,10 +109,21 @@ export function medianOfThree(arr, lo, mid, hi) {
   }
 }
 
-export function showBorder(opts) {
-  const { char, size, unit } = Object.assign(
-    { char: "-", size: 20, unit: 4 },
-    opts
-  );
-  console.log(char.repeat(Math.min(30, size) * unit));
+export function progress(text) {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(text);
+}
+
+export function banner(text, { char = "-", min = 30, center = false } = {}) {
+  let title = text.padEnd(min);
+  if (center) {
+    const len = text.length;
+    const margin = Math.ceil((min - len) / 2);
+    title = text.padStart(len + margin).padEnd(len + margin * 2);
+  }
+  const count = Math.min(100, title.length);
+  console.log(char.repeat(count));
+  console.log(title);
+  console.log(char.repeat(count));
 }

@@ -13,26 +13,6 @@ export default class PriorityQueue {
     this.compare = (a, b) => (maxpq ? less(b, a) : less(a, b));
   }
 
-  static sort(seq) {
-    const arr = seq.slice();
-    const pq = new PriorityQueue({ arr });
-    const start = pq.getParentIndex(arr.length - 1);
-    for (let i = start; i >= 0; i--) {
-      pq.swapDown(i);
-    }
-    while (!pq.isEmpty()) {
-      swap(pq.arr, 0, --pq.size);
-      pq.swapDown(0);
-    }
-    return pq.arr;
-  }
-
-  static keep(seq, capicity, maxpq) {
-    const pq = new PriorityQueue({ capicity, maxpq });
-    seq.forEach((val) => pq.insert(val));
-    return pq.arr.slice();
-  }
-
   isEmpty() {
     return this.size === 0;
   }
