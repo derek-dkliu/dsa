@@ -2,35 +2,30 @@ import { less, swap } from "../common/utils.js";
 
 /*
  * Priority queue is implemented with binary heap (here represented by array);
- * Binary heap(min) is a complete binary tree where
- * parent node is no larger than children node.
+ * Binary heap is a complete binary tree where
+ * parent's key is smaller/larger than children's key.
  */
 export default class PriorityQueue {
-  constructor({ arr = [], capicity = 0, maxpq = true } = {}) {
-    this.arr = arr;
-    this.size = arr.length;
-    this.capicity = capicity;
+  constructor(maxpq = true) {
+    this.arr = [];
     this.compare = (a, b) => (maxpq ? less(b, a) : less(a, b));
   }
 
-  isEmpty() {
-    return this.size === 0;
+  getData() {
+    return this.arr.slice();
   }
 
-  peek() {
-    if (this.isEmpty()) {
-      return null;
-    }
-    return this.arr[0];
+  isEmpty() {
+    return this.size() === 0;
+  }
+
+  size() {
+    return this.arr.length;
   }
 
   insert(item) {
-    this.arr[this.size++] = item;
-    this.swapUp(this.size - 1);
-    // check size if capicity is set
-    if (this.capicity && this.size > this.capicity) {
-      this.delete();
-    }
+    this.arr.push(item);
+    this.swapUp(this.size() - 1);
   }
 
   delete() {
@@ -38,63 +33,47 @@ export default class PriorityQueue {
       return null;
     }
     const item = this.arr[0];
-    swap(this.arr, 0, --this.size);
-    this.arr.length = this.size;
+    const last = this.size() - 1;
+    swap(this.arr, 0, last);
+    this.arr.length = last;
     this.swapDown(0);
     return item;
   }
 
-  swapUp(idx) {
-    while (this.hasParent(idx)) {
-      const parent = this.getParentIndex(idx);
-      if (this.compare(this.arr[idx], this.arr[parent])) {
-        swap(this.arr, idx, parent);
-        idx = parent;
+  swapUp(i) {
+    while (i > 0) {
+      const parent = this.getParentIndex(i);
+      if (this.compare(this.arr[i], this.arr[parent])) {
+        swap(this.arr, i, parent);
+        i = parent;
       } else {
         break;
       }
     }
   }
 
-  swapDown(idx) {
-    while (this.hasLeftChild(idx)) {
-      let left = this.getLeftChildIndex(idx);
-      if (
-        this.hasRightChild(idx) &&
-        this.compare(this.arr[this.getRightChildIndex(idx)], this.arr[left])
-      ) {
-        left = this.getRightChildIndex(idx);
+  swapDown(i, size) {
+    size = size ?? this.size();
+    while (this.getLeftChildIndex(i) < size) {
+      let left = this.getLeftChildIndex(i);
+      const right = left + 1;
+      if (right < size && this.compare(this.arr[right], this.arr[left])) {
+        left = right;
       }
-      if (this.compare(this.arr[left], this.arr[idx])) {
-        swap(this.arr, left, idx);
-        idx = left;
+      if (this.compare(this.arr[left], this.arr[i])) {
+        swap(this.arr, left, i);
+        i = left;
       } else {
         break;
       }
     }
   }
 
-  hasParent(idx) {
-    return idx > 0;
+  getParentIndex(i) {
+    return Math.floor((i - 1) / 2);
   }
 
-  hasLeftChild(idx) {
-    return this.getLeftChildIndex(idx) < this.size;
-  }
-
-  hasRightChild(idx) {
-    return this.getRightChildIndex(idx) < this.size;
-  }
-
-  getParentIndex(idx) {
-    return Math.floor((idx - 1) / 2);
-  }
-
-  getLeftChildIndex(idx) {
-    return idx * 2 + 1;
-  }
-
-  getRightChildIndex(idx) {
-    return idx * 2 + 2;
+  getLeftChildIndex(i) {
+    return i * 2 + 1;
   }
 }

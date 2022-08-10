@@ -14,10 +14,10 @@ export default class MergeSort {
     for (let size = 1; size < len; size *= 2) {
       // loop only when remaining entries is larger than size,
       // since subarray of length "size" is already sorted
-      for (let lo = 0; len - lo > size; lo += size * 2) {
+      for (let i = 0; len - i > size; i += size * 2) {
+        const lo = i;
         const mid = lo + size - 1;
-        // capped to last index if it is out of range
-        const hi = Math.min(len - 1, lo + size * 2 - 1);
+        const hi = Math.min(len - 1, lo + size * 2 - 1); // capped in case out of index
         this._merge(arr, aux, lo, mid, hi);
       }
     }
@@ -46,14 +46,15 @@ export default class MergeSort {
     const mid = lo + Math.floor((hi - lo) / 2);
     this._sort(arr, aux, lo, mid);
     this._sort(arr, aux, mid + 1, hi);
-    // // improve2: check if already sorted
-    // if (arr[mid] <= arr[mid + 1]) {
-    //   return;
-    // }
     this._merge(arr, aux, lo, mid, hi);
   }
 
   static _merge(arr, aux, lo, mid, hi) {
+    // improve2: check if already sorted
+    if (arr[mid] <= arr[mid + 1]) {
+      return;
+    }
+
     for (let k = lo; k <= hi; k++) {
       aux[k] = arr[k];
     }

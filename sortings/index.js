@@ -9,8 +9,8 @@ import HeapSort from "./heapsort.js";
 export default function sortings(size = 20) {
   const cases = [
     sequence(size, { order: false }),
-    // sequence(size, { reverse: true }),
     // sequence(size),
+    // sequence(size, { reverse: true }),
     randomSeq(size, { unique: false }),
     // sequence(size, { order: false, numeric: false }),
     // randomSeq(size, { unique: false, numeric: false }),
@@ -27,6 +27,7 @@ export default function sortings(size = 20) {
     console.log("quicksort\t", isSorted(QuickSort.sort(seq)));
     console.log("quicksort(3Way)\t", isSorted(QuickSort3Way.sort(seq)));
     console.log("heapsort\t", isSorted(HeapSort.sort(seq)));
+    // console.log("heapsort(PQ)\t", isSorted(HeapSort.pqSort(seq)));
     // console.log("heapsort(Keep)\t", HeapSort.keep(seq, 5));
   });
 }

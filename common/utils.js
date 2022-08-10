@@ -35,7 +35,7 @@ export function isSorted(arr) {
 }
 
 export function toAlphabet(num, uppercase = true) {
-  const base = uppercase ? 65 : 97;
+  const base = uppercase ? 64 : 96;
   return String.fromCharCode(base + (num % base));
 }
 
