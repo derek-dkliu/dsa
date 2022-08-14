@@ -19,7 +19,8 @@ export default class BST {
     return this.root === null;
   }
 
-  get(key) {
+  get2(key) {
+    if (key === null) throw new Error("key cannot be null");
     let node = this.root;
     while (node !== null) {
       if (less(key, node.key)) {
@@ -31,6 +32,22 @@ export default class BST {
       }
     }
     return null;
+  }
+
+  get(key) {
+    if (key === null) throw new Error("key cannot be null");
+    return this._get(this.root, key);
+  }
+
+  _get(node, key) {
+    if (node === null) return null;
+    if (less(key, node.key)) {
+      return this._get(node.left, key);
+    } else if (less(node.key, key)) {
+      return this._get(node.right, key);
+    } else {
+      return node.val;
+    }
   }
 
   contains(key) {
@@ -199,6 +216,39 @@ export default class BST {
       return this._size(node.left) + 1 + this._rank(node.right, key);
     } else {
       return this._size(node.left);
+    }
+  }
+
+  rangeCount(lo, hi) {
+    if (lo === null) throw new Error("lo key cannot be null");
+    if (hi === null) throw new Error("hi key cannot be null");
+    if (less(hi, lo)) return 0;
+    if (this.contains(hi)) {
+      return this.rank(hi) - this.rank(lo) + 1;
+    } else {
+      return this.rank(hi) - this.rank(lo);
+    }
+  }
+
+  rangeSearch(lo, hi) {
+    if (lo === null) throw new Error("lo key cannot be null");
+    if (hi === null) throw new Error("hi key cannot be null");
+    if (less(hi, lo)) return null;
+    const result = [];
+    this._rangeSearch(this.root, lo, hi, result);
+    return result;
+  }
+
+  _rangeSearch(node, lo, hi, result) {
+    if (node === null) return;
+    if (less(lo, node.key)) {
+      this._rangeSearch(node.left, lo, hi, result);
+    }
+    if (!less(node.key, lo) && !less(hi, node.key)) {
+      result.push(node.key);
+    }
+    if (less(node.key, hi)) {
+      this._rangeSearch(node.right, lo, hi, result);
     }
   }
 
