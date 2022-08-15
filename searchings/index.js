@@ -1,6 +1,8 @@
-import { sequence, banner } from "../common/utils.js";
+import { sequence, banner, randomInt } from "../common/utils.js";
+import { COLORS } from "../common/data.js";
 import BST from "./bst.js";
 import LLRB from "./llrb.js";
+import { LinearProbing, SeparateChaining } from "./hashtable.js";
 
 export default function searchings(size = 20) {
   const cases = [
@@ -18,7 +20,7 @@ export default function searchings(size = 20) {
     seq = seq.slice();
     banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
     const k0 = seq.pop();
-    [new BST(), new LLRB()].forEach((bst) => {
+    for (const bst of [new BST(), new LLRB()]) {
       seq.forEach((val) => bst.put(val, val));
       const inorderSeq = bst.inorder();
       console.log(bst.constructor.name, ...inorderSeq);
@@ -42,6 +44,16 @@ export default function searchings(size = 20) {
       console.log("deleteMin", bst.deleteMin(), ...bst.inorder());
       console.log("deleteMax", bst.deleteMax(), ...bst.inorder());
       console.log();
-    });
+    }
   });
+
+  const m1 = Math.floor(COLORS.length / 5);
+  const m2 = COLORS.length * 2;
+  const r = randomInt(0, COLORS.length - 1);
+  for (const ht of [new SeparateChaining(m1), new LinearProbing(m2)]) {
+    COLORS.forEach((color, i) => ht.put(color, i));
+    console.log(ht.constructor.name);
+    console.log(ht.toString());
+    console.log(COLORS[r], ht.hash(COLORS[r]), ht.get(COLORS[r]), "\n");
+  }
 }
