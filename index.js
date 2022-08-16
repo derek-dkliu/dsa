@@ -3,16 +3,18 @@ import examples from "./examples/index.js";
 import structures from "./structures/index.js";
 import sortings from "./sortings/index.js";
 import searchings from "./searchings/index.js";
+import graphs from "./graphs/index.js";
 import { banner } from "./common/utils.js";
 
 const prompt = promptSync({ sigint: true });
 
 function showHints() {
   banner("Welcome to DSA", { char: "*", center: true });
-  console.log("(1) Union-Find");
+  console.log("(1) Structures");
   console.log("(2) Sortings");
   console.log("(3) Searchings");
-  console.log("(4) Examples");
+  console.log("(4) Graphs");
+  console.log("(5) Examples");
   console.log("(0) Exit\n");
 }
 
@@ -31,6 +33,9 @@ while (!exit) {
       searchings();
       break;
     case 4:
+      graphs();
+      break;
+    case 5:
       examples();
       break;
     default:

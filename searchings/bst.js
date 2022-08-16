@@ -1,4 +1,5 @@
 import { less } from "../common/utils.js";
+import { Queue } from "../structures/queue.js";
 
 class Node {
   constructor(key, val) {
@@ -267,16 +268,16 @@ export default class BST {
 
   levelorder() {
     const result = [];
-    const queue = [];
-    queue.push(this.root);
-    while (queue.length > 0) {
-      const node = queue.shift();
+    const queue = new Queue();
+    queue.enqueue(this.root);
+    while (!queue.isEmpty()) {
+      const node = queue.dequeue();
       result.push(node.key);
       if (node.left) {
-        queue.push(node.left);
+        queue.enqueue(node.left);
       }
       if (node.right) {
-        queue.push(node.right);
+        queue.enqueue(node.right);
       }
     }
     return result;

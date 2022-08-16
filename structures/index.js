@@ -1,50 +1,61 @@
 import promptSync from "prompt-sync";
 import { banner } from "../common/utils.js";
-import { UnionFind } from "./union-find.js";
-
-const UNION = "c";
-const FIND = "t";
-const RANDOM = "r";
-const BACK = "b";
-const QUIT = "Back";
+import { LinkedListStack, ResizingArrayStack } from "./stack.js";
+import { LinkedListQueue, ResizingArrayQueue } from "./queue.js";
+import { test as UnionFindTest } from "./union-find.js";
 
 const prompt = promptSync({ sigint: true });
 
-export default function structures() {
-  banner("Union-Find Client", { center: true });
-  console.log("c <1> <2>\t Connect <1> and <2>.");
-  console.log("t <1> <2>\t Test if <1> and <2> are connected.");
-  console.log("r <n>\t\t Reset with <n> random nodes.");
-  console.log("b or back \t Back to main\n");
+function showHints() {
+  banner("Structures", { center: true });
+  console.log("(1) Stack");
+  console.log("(2) Queue");
+  console.log("(3) Union Find");
+  console.log("(0) Back to main\n");
+}
 
-  const uf = new UnionFind();
+export default function structures() {
   let exit = false;
   while (!exit) {
-    const line = prompt(">> ");
-    const arr = line.split(/\s+/);
-    const op = arr[0].toLowerCase();
-    const p = Number(arr[1]) || 0;
-    const q = Number(arr[2]) || 0;
-    switch (op) {
-      case UNION:
-        if (uf.union(p, q)) {
-          uf.inspect();
-        } else {
-          console.log(`${p} and ${q} is already connected.`);
+    showHints();
+    const opt = Number(prompt(">> "));
+    switch (opt) {
+      case 1:
+        const seq1 = "to be or not to - be - - that - - - is".split(" ");
+        for (const stack of [new LinkedListStack(), new ResizingArrayStack()]) {
+          const result = [];
+          for (const item of seq1) {
+            if (item === "-") {
+              result.push(stack.pop());
+            } else {
+              stack.push(item);
+            }
+          }
+          console.log(result, stack.size);
         }
         break;
-      case FIND:
-        console.log(uf.connected(p, q));
+      case 2:
+        const seq2 = "to be or not to - be - - that - - - is".split(" ");
+        for (const queue of [new LinkedListQueue(), new ResizingArrayQueue()]) {
+          const result = [];
+          for (const item of seq2) {
+            if (item === "-") {
+              result.push(queue.dequeue());
+            } else {
+              queue.enqueue(item);
+            }
+          }
+          console.log(result, queue.size);
+        }
         break;
-      case RANDOM:
-        uf.init(p);
+      case 3:
+        UnionFindTest();
         break;
-      case BACK:
-      case QUIT:
+      case 0:
         exit = true;
         break;
       default:
-        uf.inspect();
+        console.log("Invalid command.");
     }
   }
 }

@@ -23,7 +23,9 @@ export default function searchings(size = 20) {
     for (const bst of [new BST(), new LLRB()]) {
       seq.forEach((val) => bst.put(val, val));
       const inorderSeq = bst.inorder();
+      const hasLevelorder = typeof bst["levelorder"] === "function";
       console.log(bst.constructor.name, ...inorderSeq);
+      console.log("levelorder", hasLevelorder ? bst.levelorder() : undefined);
       console.log("min", bst.min());
       console.log("max", bst.max());
       console.log("size", bst.size());
