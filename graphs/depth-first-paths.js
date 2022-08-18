@@ -7,13 +7,28 @@ export class DepthfirstPaths {
   }
 
   dfs(G, v) {
+    // recursive method
     this.marked[v] = true;
-    for (const w of G.adjSet(v)) {
+    for (const w of G.adj(v)) {
       if (!this.marked[w]) {
-        this.dfs(G, w);
         this.parent[w] = v;
+        this.dfs(G, w);
       }
     }
+
+    // // iterative method
+    // const stack = [v];
+    // this.marked[v] = true;
+    // while (stack.length > 0) {
+    //   const v = stack.pop();
+    //   for (const w of G.adj(v)) {
+    //     if (!this.marked[w]) {
+    //       stack.push(w);
+    //       this.marked[w] = true;
+    //       this.parent[w] = v;
+    //     }
+    //   }
+    // }
   }
 
   hasPathTo(v) {

@@ -1,31 +1,33 @@
 export default class Graph {
-  constructor(size) {
-    this.size = size;
-    this.adj = [];
-    for (let i = 0; i < this.size; i++) {
-      this.adj[i] = new Set();
+  constructor(vn) {
+    this.vn = vn;
+    this.en = 0;
+    this.adjList = [];
+    for (let i = 0; i < this.V(); i++) {
+      this.adjList[i] = [];
     }
   }
 
   addEdge(v, w) {
-    this.adj[v].add(w);
-    this.adj[w].add(v);
+    this.adjList[v].push(w);
+    this.adjList[w].push(v);
+    this.en++;
   }
 
-  adjSet(v) {
-    return this.adj[v];
+  adj(v) {
+    return this.adjList[v] || [];
   }
 
   V() {
-    return this.size;
+    return this.vn;
   }
 
   E() {
-    return this.adj.reduce((acc, curr) => acc + curr.size, 0) / 2;
+    return this.en;
   }
 
   degree(v) {
-    return this.adj[v]?.size || 0;
+    return this.adjList[v]?.length || 0;
   }
 
   maxDegree() {
@@ -46,7 +48,7 @@ export default class Graph {
   countSelfLoop() {
     let count = 0;
     for (let v = 0; v < this.V(); v++) {
-      for (const w of this.adjSet(v)) {
+      for (const w of this.adj(v)) {
         if (w === v) count++;
       }
     }
@@ -56,7 +58,7 @@ export default class Graph {
   toString() {
     let result = "";
     for (let v = 0; v < this.V(); v++) {
-      result += v + ":\t" + [...this.adj[v].keys()] + "\n";
+      result += v + ":\t" + this.adjList[v] + "\n";
     }
     return result;
   }

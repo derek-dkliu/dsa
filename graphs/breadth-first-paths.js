@@ -10,15 +10,15 @@ export class BreadthFirstPaths {
   }
 
   bfs(G, v) {
-    const queue = new Queue();
-    queue.enqueue(v);
+    const q = new Queue();
+    q.enqueue(v);
     this.marked[v] = true;
     this.dist[v] = 0;
-    while (!queue.isEmpty()) {
-      const v = queue.dequeue();
-      for (const w of G.adjSet(v)) {
+    while (!q.isEmpty()) {
+      const v = q.dequeue();
+      for (const w of G.adj(v)) {
         if (!this.marked[w]) {
-          queue.enqueue(w);
+          q.enqueue(w);
           this.marked[w] = true;
           this.parent[w] = v;
           this.dist[w] = this.dist[v] + 1;
