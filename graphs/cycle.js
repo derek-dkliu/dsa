@@ -47,22 +47,19 @@ export class Cycle {
   dfs(G, v) {
     this.marked[v] = true;
     for (const w of G.adj(v)) {
-      // return if cycle already found
-      if (this.cycle !== null) return;
+      if (this.cycle !== null) return; // return if cycle already found
       if (!this.marked[w]) {
         this.parent[w] = v;
         this.dfs(G, w);
-      } else {
+      } else if (w !== this.parent[v]) {
         // disregard reversed edge leading to parent
-        if (w !== this.parent[v]) {
-          this.cycle = [w];
-          let x = v;
-          while (x !== w) {
-            this.cycle.push(x);
-            x = this.parent[x];
-          }
-          this.cycle.push(w);
+        this.cycle = [w];
+        let x = v;
+        while (x !== w) {
+          this.cycle.push(x);
+          x = this.parent[x];
         }
+        this.cycle.push(w);
       }
     }
   }

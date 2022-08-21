@@ -1,15 +1,37 @@
-export class CC {
+export class KosarajuSharir {
   constructor(G) {
     this.marked = [];
-    this.id = []; // id[v] = id of connected component containing v
-    this.size = []; // size[id] = number of vertices in given component
-    this.count = 0; // number of connected component
-    for (let v = 0; v < G.V(); v++) {
+    this.id = [];
+    this.size = [];
+    this.count = 0;
+    const order = this.reversePostorder(G.reverse());
+    for (const v of order) {
       if (!this.marked[v]) {
         this.dfs(G, v);
         this.count++;
       }
     }
+  }
+
+  reversePostorder(G) {
+    this.postorder = [];
+    this.visited = [];
+    for (let v = 0; v < G.V(); v++) {
+      if (!this.visited[v]) {
+        this.dfsPostorder(G, v);
+      }
+    }
+    return this.postorder.reverse();
+  }
+
+  dfsPostorder(G, v) {
+    this.visited[v] = true;
+    for (const w of G.adj(v)) {
+      if (!this.visited[w]) {
+        this.dfsPostorder(G, w);
+      }
+    }
+    this.postorder.push(v);
   }
 
   dfs(G, v) {

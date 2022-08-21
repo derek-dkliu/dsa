@@ -23,17 +23,15 @@ export class Bipartite {
         this.color[w] = !this.color[v];
         this.parent[w] = v;
         this.dfs(G, w);
-      } else {
+      } else if (this.color[w] === this.color[v]) {
         // create an odd-length cycle once found
-        if (this.color[w] === this.color[v]) {
-          this.cycle = [w];
-          let x = v;
-          while (x !== w) {
-            this.cycle.push(x);
-            x = this.parent[x];
-          }
-          this.cycle.push(w);
+        this.cycle = [w];
+        let x = v;
+        while (x !== w) {
+          this.cycle.push(x);
+          x = this.parent[x];
         }
+        this.cycle.push(w);
       }
     }
   }
@@ -51,28 +49,26 @@ export class Bipartite {
           this.parent[w] = v;
           this.color[w] = !this.color[v];
           q.enqueue(w);
-        } else {
+        } else if (this.color[w] === this.color[v]) {
           // Note: dist[v] equals dist[w] due to the feature of bfs,
           // find the closest common ancestor x of v and w,
           // then the odd cycle is (v->x) + (x->w) + (w->v)
-          if (this.color[w] === this.color[v]) {
-            this.cycle = [];
-            const stack = [];
-            let x = v;
-            let y = w;
-            while (x !== y) {
-              this.cycle.push(x);
-              stack.push(y);
-              x = this.parent[x];
-              y = this.parent[y];
-            }
+          this.cycle = [];
+          const stack = [];
+          let x = v;
+          let y = w;
+          while (x !== y) {
             this.cycle.push(x);
-            while (stack.length > 0) {
-              this.cycle.push(stack.pop());
-            }
-            this.cycle.push(v);
-            return;
+            stack.push(y);
+            x = this.parent[x];
+            y = this.parent[y];
           }
+          this.cycle.push(x);
+          while (stack.length > 0) {
+            this.cycle.push(stack.pop());
+          }
+          this.cycle.push(v);
+          return;
         }
       }
     }

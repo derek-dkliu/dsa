@@ -48,7 +48,7 @@ export const COLORS = [
   "Black",
 ];
 
-export const GRAPH1 = {
+export const G1 = {
   v: 13,
   edges: [
     [0, 5],
@@ -67,7 +67,7 @@ export const GRAPH1 = {
   ],
 };
 
-export const GRAPH2 = {
+export const G2 = {
   v: 7,
   edges: [
     [0, 1],
@@ -82,7 +82,7 @@ export const GRAPH2 = {
   ],
 };
 
-export const GRAPH3 = {
+export const G3 = {
   v: 7,
   edges: [
     [0, 1],
@@ -98,7 +98,7 @@ export const GRAPH3 = {
   ],
 };
 
-export const GRAPH4 = {
+export const G4 = {
   v: 6,
   edges: [
     [0, 5],
@@ -109,5 +109,50 @@ export const GRAPH4 = {
     [3, 4],
     [3, 5],
     [0, 2],
+  ],
+};
+
+export const DG1 = {
+  v: 13,
+  edges: [
+    [4, 2],
+    [2, 3],
+    [3, 2],
+    [6, 0],
+    [0, 1],
+    [2, 0],
+    [11, 12],
+    [12, 9],
+    [9, 10],
+    [9, 11],
+    [7, 9],
+    [10, 12],
+    [11, 4],
+    [4, 3],
+    [3, 5],
+    [6, 8],
+    [8, 6],
+    [5, 4],
+    [0, 5],
+    [6, 4],
+    [6, 9],
+    [7, 6],
+  ],
+};
+
+export const DG2 = {
+  v: 7,
+  edges: [
+    [0, 5],
+    [0, 1],
+    [3, 5],
+    [5, 2],
+    [6, 0],
+    [1, 4],
+    [0, 2],
+    [3, 6],
+    [3, 4],
+    [6, 4],
+    [3, 2],
   ],
 };

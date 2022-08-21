@@ -1,10 +1,12 @@
-export class Graph {
+export class Digraph {
   constructor(vn) {
     this.vn = vn;
     this.en = 0;
     this.adjList = [];
+    this.indegrees = [];
     for (let v = 0; v < this.vn; v++) {
       this.adjList[v] = [];
+      this.indegrees[v] = 0;
     }
   }
 
@@ -12,7 +14,7 @@ export class Graph {
     this.validateVertex(v);
     this.validateVertex(w);
     this.adjList[v].push(w);
-    this.adjList[w].push(v);
+    this.indegrees[w]++;
     this.en++;
   }
 
@@ -29,48 +31,37 @@ export class Graph {
     return this.en;
   }
 
-  degree(v) {
+  outdegree(v) {
     this.validateVertex(v);
     return this.adjList[v].length;
   }
 
-  maxDegree() {
-    let max = 0;
-    for (let v = 0; v < this.V(); v++) {
-      const degree = this.degree(v);
-      if (degree > max) {
-        max = degree;
-      }
-    }
-    return max;
+  indegree(v) {
+    this.validateVertex(v);
+    return this.indegrees[v];
   }
 
-  avgDegree() {
-    return (this.E() * 2) / this.V();
-  }
-
-  countSelfLoop() {
-    let count = 0;
+  reverse() {
+    const g = new Digraph(this.V());
     for (let v = 0; v < this.V(); v++) {
       for (const w of this.adj(v)) {
-        if (w === v) count++;
+        g.addEdge(w, v);
       }
     }
-    return count / 2;
+    return g;
+  }
+
+  toString() {
+    let result = `V: ${this.V()}\tE: ${this.E()}\n`;
+    for (let v = 0; v < this.V(); v++) {
+      result += v + ":\t" + this.adjList[v] + "\n";
+    }
+    return result;
   }
 
   validateVertex(v) {
     if (v < 0 || v >= this.vn) {
       throw new Error(`vertex ${v} is not between 0 and ${this.vn - 1}`);
     }
-  }
-
-  toString() {
-    let result = `V: ${this.V()}\tE: ${this.E()}\nDegree: ${this.maxDegree()}(max) ${this.avgDegree()}(avg)\n`;
-    result += `SelfLoop: ${this.countSelfLoop()}\n`;
-    for (let v = 0; v < this.V(); v++) {
-      result += v + ":\t" + this.adjList[v] + "\n";
-    }
-    return result;
   }
 }
