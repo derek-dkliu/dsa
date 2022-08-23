@@ -1,4 +1,4 @@
-export class TarjanScc {
+export class TarjanSCC {
   constructor(G) {
     this.marked = [];
     this.disc = [];

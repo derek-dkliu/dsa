@@ -1,6 +1,6 @@
 import { randomInt } from "../common/utils.js";
 
-class UF {
+class UFBase {
   constructor() {
     this.id = [];
   }
@@ -35,7 +35,7 @@ class UF {
   }
 }
 
-export class QuickFind extends UF {
+class QuickFind extends UFBase {
   connected(p, q) {
     return this.root(p) === this.root(q);
   }
@@ -59,7 +59,7 @@ export class QuickFind extends UF {
   }
 }
 
-export class QuickUnion extends UF {
+class QuickUnion extends UFBase {
   connected(p, q) {
     return this.root(p) === this.root(q);
   }
@@ -83,7 +83,7 @@ export class QuickUnion extends UF {
   }
 }
 
-export class UnionFind extends QuickUnion {
+class UF extends QuickUnion {
   constructor(n = 10) {
     super();
     this.init(n);
@@ -134,6 +134,44 @@ export class UnionFind extends QuickUnion {
   }
 }
 
+export class UnionFind {
+  constructor(n) {
+    this.parent = [];
+    this.size = [];
+    for (let i = 0; i < n; i++) {
+      this.parent[i] = i;
+      this.size[i] = 1;
+    }
+  }
+
+  connected(p, q) {
+    return this.root(p) === this.root(q);
+  }
+
+  root(p) {
+    while (p !== this.parent[p]) {
+      this.parent[p] = this.parent[this.parent[p]];
+      p = this.parent[p];
+    }
+    return p;
+  }
+
+  union(p, q) {
+    const proot = this.root(p);
+    const qroot = this.root(q);
+    if (proot === qroot) {
+      return;
+    }
+    if (this.size[proot] <= this.size[qroot]) {
+      this.parent[proot] = qroot;
+      this.size[qroot] += this.size[proot];
+    } else {
+      this.parent[qroot] = proot;
+      this.size[proot] += this.size[qroot];
+    }
+  }
+}
+
 import { banner } from "../common/utils.js";
 import promptSync from "prompt-sync";
 const prompt = promptSync({ sigint: true });
@@ -150,7 +188,7 @@ export function test() {
   console.log("r <n>\t\t Reset with <n> random nodes.");
   console.log("0\t Back to main\n");
 
-  const uf = new UnionFind();
+  const uf = new UF();
   let exit = false;
   while (!exit) {
     const line = prompt(">>> ");

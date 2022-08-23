@@ -1,4 +1,4 @@
-export class KosarajuSharir {
+export class KosarajuSharirSCC {
   constructor(G) {
     this.marked = [];
     this.id = [];

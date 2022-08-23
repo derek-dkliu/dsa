@@ -1,4 +1,4 @@
-import { G1, G2, G3, DG1, DG2 } from "../common/data.js";
+import { G1, G2, G3, DG1, DG2, EWG1 } from "../common/data.js";
 import { Graph } from "./graph.js";
 import { DepthfirstPaths } from "./depth-first-paths.js";
 import { BreadthFirstPaths } from "./breadth-first-paths.js";
@@ -11,12 +11,17 @@ import { Bridge } from "./bridge.js";
 import { Digraph } from "./digraph.js";
 import { DirectedCycle } from "./directed-cycle.js";
 import { TopologicalSort } from "./topological-sort.js";
-import { KosarajuSharir } from "./kosaraju-sharir.js";
-import { TarjanScc } from "./tarjan-scc.js";
+import { KosarajuSharirSCC } from "./scc-kosaraju-sharir.js";
+import { TarjanSCC } from "./scc-tarjan.js";
+import { EdgeWeightedGraph } from "./graph-edge-weighted.js";
+import { KruskalMST } from "./mst-kruskal.js";
+import { LazyPrimMST } from "./mst-prim-lazy.js";
+import { EagerPrimMST } from "./mst-prim-eager.js";
 
 export default function graphs() {
   // graph();
-  digraph();
+  // digraph();
+  graphEdgeWeighted();
 }
 
 function graph() {
@@ -75,22 +80,41 @@ function digraph() {
       TopologicalSort.nonrecursive(G)
     );
 
-    const scc = new KosarajuSharir(G);
+    const scc = new KosarajuSharirSCC(G);
     console.log(
-      "Kosaraju",
+      "Kosaraju SCC",
       scc.getCount(),
       scc.getId(5),
       scc.getSize(5),
       scc.connected(0, 5)
     );
 
-    const tarjanScc = new TarjanScc(G);
+    const tarjanSCC = new TarjanSCC(G);
     console.log(
-      "Tarjan",
-      tarjanScc.getCount(),
-      tarjanScc.getId(5),
-      tarjanScc.getSize(5),
-      tarjanScc.connected(0, 5)
+      "Tarjan SCC",
+      tarjanSCC.getCount(),
+      tarjanSCC.getId(5),
+      tarjanSCC.getSize(5),
+      tarjanSCC.connected(0, 5)
     );
+  }
+}
+
+function graphEdgeWeighted() {
+  for (const data of [EWG1]) {
+    const G = new EdgeWeightedGraph(data.v);
+    for (const [v, w, weight] of data.edges) {
+      G.addEdge(v, w, weight);
+    }
+    console.log(G.toString());
+
+    const kruskalMST = new KruskalMST(G);
+    console.log("KruskalMST", kruskalMST.toString());
+
+    const lazyPrimMST = new LazyPrimMST(G);
+    console.log("LazyPrimMST", lazyPrimMST.toString());
+
+    const eagerPrimMST = new EagerPrimMST(G);
+    console.log("EagerPrimMST", eagerPrimMST.toString());
   }
 }

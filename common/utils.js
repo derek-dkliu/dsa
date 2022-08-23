@@ -1,6 +1,8 @@
 export function less(a, b, compareFn) {
   if (compareFn) {
     return compareFn(a, b) < 0;
+  } else if (typeof a?.compare === "function") {
+    return a.compare(b) < 0;
   } else {
     return a < b;
   }
