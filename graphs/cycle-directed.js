@@ -7,7 +7,7 @@ export class DirectedCycle {
     this.onstack = [];
     this.cycle = null;
     for (let v = 0; v < G.V(); v++) {
-      if (!this.marked[v] && this.cycle === null) {
+      if (!this.marked[v] && !this.hasCycle()) {
         this.dfs(G, v);
       }
     }
@@ -17,7 +17,7 @@ export class DirectedCycle {
     this.marked[v] = true;
     this.onstack[v] = true;
     for (const w of G.adj(v)) {
-      if (this.cycle !== null) return;
+      if (this.hasCycle()) return;
       if (!this.marked[w]) {
         this.parent[w] = v;
         this.dfs(G, w);

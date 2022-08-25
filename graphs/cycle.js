@@ -1,13 +1,16 @@
 export class Cycle {
   constructor(G) {
-    if (this.hasSelfLoop(G)) return;
+    // don't need special case to identify self-loop as a cycle
+    // if (this.hasSelfLoop(G)) return;
+
+    // need special case to identify parallel edge as a cycle
     if (this.hasParallelEdges(G)) return;
 
     this.marked = [];
     this.parent = [];
     this.cycle = null;
     for (let v = 0; v < G.V(); v++) {
-      if (!this.marked[v]) {
+      if (!this.marked[v] && !this.hasCycle()) {
         this.dfs(G, v);
       }
     }
@@ -47,7 +50,7 @@ export class Cycle {
   dfs(G, v) {
     this.marked[v] = true;
     for (const w of G.adj(v)) {
-      if (this.cycle !== null) return; // return if cycle already found
+      if (this.hasCycle()) return; // return if cycle already found
       if (!this.marked[w]) {
         this.parent[w] = v;
         this.dfs(G, w);

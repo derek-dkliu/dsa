@@ -1,4 +1,4 @@
-import { G1, G2, G3, DG1, DG2, EWG1 } from "../common/data.js";
+import { G1, G2, G3, DG1, DG2, EWG1, EWDG1, EWDG2 } from "../common/data.js";
 import { Graph } from "./graph.js";
 import { DepthfirstPaths } from "./depth-first-paths.js";
 import { BreadthFirstPaths } from "./breadth-first-paths.js";
@@ -9,7 +9,7 @@ import { EulerianPath } from "./eulerian-path.js";
 import { ArticulationPoint } from "./ap.js";
 import { Bridge } from "./bridge.js";
 import { Digraph } from "./digraph.js";
-import { DirectedCycle } from "./directed-cycle.js";
+import { DirectedCycle } from "./cycle-directed.js";
 import { TopologicalSort } from "./topological-sort.js";
 import { KosarajuSharirSCC } from "./scc-kosaraju-sharir.js";
 import { TarjanSCC } from "./scc-tarjan.js";
@@ -17,11 +17,16 @@ import { EdgeWeightedGraph } from "./graph-edge-weighted.js";
 import { KruskalMST } from "./mst-kruskal.js";
 import { LazyPrimMST } from "./mst-prim-lazy.js";
 import { EagerPrimMST } from "./mst-prim-eager.js";
+import { EdgeWeightedDigraph } from "./digraph-edge-weighted.js";
+import { DijkstraSP } from "./sp-dijkstra.js";
+import { AcyclicSP } from "./sp-acyclic.js";
+import { BellmanFordSP } from "./sp-bellman-ford.js";
 
 export default function graphs() {
   // graph();
   // digraph();
-  graphEdgeWeighted();
+  // graphEdgeWeighted();
+  digraphEdgeWeighted();
 }
 
 function graph() {
@@ -116,5 +121,24 @@ function graphEdgeWeighted() {
 
     const eagerPrimMST = new EagerPrimMST(G);
     console.log("EagerPrimMST", eagerPrimMST.toString());
+  }
+}
+
+function digraphEdgeWeighted() {
+  for (const data of [EWDG1, EWDG2]) {
+    const G = new EdgeWeightedDigraph(data.v);
+    for (const [v, w, weight] of data.edges) {
+      G.addEdge(v, w, weight);
+    }
+    console.log(G.toString());
+
+    const dijkstraSP = new DijkstraSP(G, 0);
+    console.log("DijkstraSP", dijkstraSP.toString());
+
+    // const acyclicSP = new AcyclicSP(G, 0);
+    // console.log("AcyclicSP", acyclicSP.toString());
+
+    const bellmanfordSP = new BellmanFordSP(G, 0);
+    console.log("BellmanFordSP", bellmanfordSP.toString());
   }
 }

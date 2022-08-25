@@ -1,5 +1,5 @@
 import { Queue } from "../structures/queue.js";
-import { DirectedCycle } from "./directed-cycle.js";
+import { DirectedCycle } from "./cycle-directed.js";
 
 export class TopologicalSort {
   constructor(G) {
