@@ -81,8 +81,8 @@ export class QuickSort {
 
 export class QuickSort3Way {
   static sort(seq) {
-    if (!Array.isArray(seq)) {
-      return null;
+    if (!seq || seq.length === 0) {
+      return seq;
     }
     // shuflling is needed for performance guarantee
     const arr = shuffle(seq.slice());

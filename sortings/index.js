@@ -5,6 +5,9 @@ import Shellsort from "./shellsort.js";
 import MergeSort from "./mergesort.js";
 import { QuickSort3Way, QuickSort } from "./quicksort.js";
 import HeapSort from "./heapsort.js";
+import LSD from "../strings/lsd.js";
+import MSD from "../strings/msd.js";
+import Quick3String from "../strings/quick3string.js";
 
 export default function sortings(size = 20) {
   const cases = [
@@ -13,7 +16,7 @@ export default function sortings(size = 20) {
     // sequence(size, { reverse: true }),
     randomSeq(size, { unique: false }),
     // sequence(size, { order: false, numeric: false }),
-    // randomSeq(size, { unique: false, numeric: false }),
+    randomSeq(size, { unique: false, numeric: false }),
   ];
 
   cases.forEach((seq, index) => {
@@ -29,5 +32,8 @@ export default function sortings(size = 20) {
     console.log("heapsort\t", isSorted(HeapSort.sort(seq)));
     // console.log("heapsort(PQ)\t", isSorted(HeapSort.pqSort(seq)));
     // console.log("heapsort(Keep)\t", HeapSort.keep(seq, 5));
+    console.log("LSD\t\t", isSorted(LSD.sort(seq)));
+    console.log("MSD\t\t", isSorted(MSD.sort(seq)));
+    console.log("quick3string\t", isSorted(Quick3String.sort(seq)));
   });
 }
