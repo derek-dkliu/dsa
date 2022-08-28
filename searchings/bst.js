@@ -1,4 +1,4 @@
-import { less } from "../common/utils.js";
+import { less } from "../common/helpers.js";
 import { Queue } from "../structures/queue.js";
 
 class Node {

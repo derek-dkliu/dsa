@@ -1,4 +1,4 @@
-import { randomInt } from "../common/utils.js";
+import { randomInt } from "../common/helpers.js";
 
 class UFBase {
   constructor() {

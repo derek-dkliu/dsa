@@ -1,4 +1,4 @@
-import { less, swap } from "../common/utils.js";
+import { less, swap } from "../common/helpers.js";
 
 export default class Shellsort {
   static sort(seq) {

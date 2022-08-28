@@ -1,4 +1,4 @@
-import { less, swap, shuffle, medianOfThree } from "../common/utils.js";
+import { less, swap, shuffle, medianOfThree } from "../common/helpers.js";
 
 export class QuickSort {
   static CUTOFF = 10;

@@ -1,4 +1,4 @@
-import { less, swap } from "../common/utils.js";
+import { less, swap } from "../common/helpers.js";
 
 /*
  * Priority queue is implemented with binary heap (here represented by array);

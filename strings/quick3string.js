@@ -1,4 +1,4 @@
-import { shuffle } from "../common/utils.js";
+import { shuffle } from "../common/helpers.js";
 
 export default class Quick3String {
   static sort(seq) {

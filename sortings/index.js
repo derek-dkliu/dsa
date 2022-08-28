@@ -1,4 +1,5 @@
-import { sequence, randomSeq, isSorted, banner } from "../common/utils.js";
+import { sequence, randomSeq, isSorted } from "../common/helpers.js";
+import { banner } from "../common/utils.js";
 import Selection from "./selection.js";
 import Insertion from "./insertion.js";
 import Shellsort from "./shellsort.js";

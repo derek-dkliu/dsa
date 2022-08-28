@@ -1,5 +1,6 @@
 import { UnionFind } from "../structures/union-find.js";
-import { sum, progress } from "../common/utils.js";
+import { sum } from "../common/helpers.js";
+import { progress } from "../common/utils.js";
 
 export class Percolation extends UnionFind {
   static async run() {

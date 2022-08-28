@@ -1,4 +1,4 @@
-export default class EvalArithmetic {
+export class EvalArithmetic {
   static infix(expression) {
     const vals = [];
     const ops = [];

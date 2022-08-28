@@ -1,4 +1,4 @@
-import { less } from "../common/utils.js";
+import { less } from "../common/helpers.js";
 
 export default class MergeSort {
   static CUTOFF = 6;

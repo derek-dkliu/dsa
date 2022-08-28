@@ -1,4 +1,4 @@
-import { less, swap } from "../common/utils.js";
+import { less, swap } from "../common/helpers.js";
 import PriorityQueue from "../structures/priority-queue.js";
 
 export default class HeapSort {
