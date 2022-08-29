@@ -1,3 +1,5 @@
+import { ArgumentError } from "../common/errors.js";
+
 export default class SuffixArray {
   constructor(text) {
     this.suffixes = [];
@@ -16,7 +18,8 @@ export default class SuffixArray {
   }
 
   select(i) {
-    if (i < 0 || i >= this.length()) throw new Error("Illegal Argument");
+    if (i < 0 || i >= this.length())
+      throw new ArgumentError("Illegal Argument");
     return this.suffixes[i].toString();
   }
 
@@ -36,7 +39,8 @@ export default class SuffixArray {
   // Returns the length of the longest common prefix of
   // the ith smallest suffix and i-1st smallest suffix.
   lcp(i) {
-    if (i < 1 || i >= this.length()) throw new Error("Illegal Argument");
+    if (i < 1 || i >= this.length())
+      throw new ArgumentError("Illegal Argument");
     return SuffixArray.lcpSuffix(this.suffixes[i], this.suffixes[i - 1]);
   }
 

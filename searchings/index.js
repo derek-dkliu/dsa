@@ -1,6 +1,6 @@
 import { sequence, randomInt } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
-import { COLORS } from "../common/data.js";
+import { COLORS } from "../data/data.js";
 import BST from "./bst.js";
 import LLRB from "./llrb.js";
 import { LinearProbing, SeparateChaining } from "./hashtable.js";

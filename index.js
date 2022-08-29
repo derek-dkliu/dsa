@@ -3,6 +3,7 @@ import examples from "./examples/index.js";
 import structures from "./structures/index.js";
 import sortings from "./sortings/index.js";
 import searchings from "./searchings/index.js";
+import strings from "./strings/index.js";
 import graphs from "./graphs/index.js";
 import { banner } from "./common/utils.js";
 
@@ -14,7 +15,8 @@ function showHints() {
   console.log("(2) Sortings");
   console.log("(3) Searchings");
   console.log("(4) Graphs");
-  console.log("(5) Examples");
+  console.log("(5) Strings");
+  console.log("(6) Examples");
   console.log("(0) Exit\n");
 }
 
@@ -36,6 +38,9 @@ while (!exit) {
       graphs();
       break;
     case 5:
+      strings();
+      break;
+    case 6:
       examples();
       break;
     default:

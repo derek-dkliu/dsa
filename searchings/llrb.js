@@ -1,3 +1,4 @@
+import { ArgumentError } from "../common/errors.js";
 import { less } from "../common/helpers.js";
 
 class Node {
@@ -201,7 +202,7 @@ export default class LLRB {
 
   select(rank) {
     if (rank < 0 || rank >= this.size()) {
-      throw new Error("argument is out of range");
+      throw new ArgumentError("argument is out of range");
     }
     return this._select(this.root, rank);
   }

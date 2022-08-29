@@ -1,4 +1,4 @@
-import { G1, G2, G3, DG1, DG2, EWG1, EWDG1, EWDG2 } from "../common/data.js";
+import { G1, G2, G3, DG1, DG2, EWG1, EWDG1, EWDG2 } from "../data/data.js";
 import { Graph } from "./graph.js";
 import { DepthfirstPaths } from "./depth-first-paths.js";
 import { BreadthFirstPaths } from "./breadth-first-paths.js";
