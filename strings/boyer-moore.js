@@ -1,3 +1,5 @@
+// take ~N/M character compares (i.e sublinear time)
+// worst-case can be ~MN (e.g. search ABBBB in BBBBBB...)
 export class BoyerMoore {
   constructor(pat) {
     this.R = 256;

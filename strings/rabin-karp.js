@@ -1,3 +1,11 @@
+// Monte Carlo version:
+// *Always runs in linear time
+// *Extremely likely to return correct answer(with large random prime)
+
+// Las Vegas version:
+// *Always return correct answer
+// *Extremely likely to run in linear time(but worst-case is MN)
+
 export class RabinKarp {
   constructor(pat) {
     this.pat = pat;

@@ -53,9 +53,10 @@ export class TrieST {
       const c = key.charCodeAt(d);
       node.next[c] = this._delete(node.next[c], key, d + 1);
     }
+    // remove subtrie rooted at node if it is completely empty
     if (node.val !== null) return node;
-    for (const child of node.next) {
-      if (!!child) return node;
+    for (let i = 0; i < node.next.length; i++) {
+      if (!!node.next[i]) return node;
     }
     return null;
   }

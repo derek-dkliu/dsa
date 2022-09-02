@@ -1,3 +1,5 @@
+// access no more than M + N chars
+// construct dfa[][] proportional to RM in time and space
 export class KMP {
   constructor(pat) {
     this.M = pat.length;
