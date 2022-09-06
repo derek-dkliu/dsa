@@ -1,6 +1,7 @@
-import { sequence, randomInt } from "../common/helpers.js";
+import { sequence, randomInt, randomSeq } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
 import { COLORS } from "../data/data.js";
+import BinarySearch from "./binary-search.js";
 import BST from "./bst.js";
 import LLRB from "./llrb.js";
 import { LinearProbing, SeparateChaining } from "./hashtable.js";
@@ -59,4 +60,11 @@ export default function searchings(size = 20) {
     console.log(ht.toString());
     console.log(COLORS[r], ht.hash(COLORS[r]), ht.get(COLORS[r]), "\n");
   }
+
+  const seq = randomSeq(20, { numeric: false, unique: false }).sort();
+  console.log(
+    seq.toString(),
+    BinarySearch.rank(seq, "E"),
+    BinarySearch.indexOf(seq, "E")
+  );
 }

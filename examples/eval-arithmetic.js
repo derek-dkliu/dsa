@@ -1,4 +1,9 @@
 export class EvalArithmetic {
+  static run() {
+    const expr = "( ( 7 - 1 ) + ( ( ( 2 + 3 ) * ( 4 * 5 ) ) / 10 ) )";
+    console.log(expr, "=", EvalArithmetic.infix(expr));
+  }
+
   static infix(expression) {
     const vals = [];
     const ops = [];
