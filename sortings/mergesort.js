@@ -9,15 +9,15 @@ export default class MergeSort {
     }
     const arr = seq.slice();
     const aux = seq.slice();
-    const len = arr.length;
+    const n = arr.length;
     // size is the length of subarray already sorted
-    for (let size = 1; size < len; size *= 2) {
+    for (let size = 1; size < n; size *= 2) {
       // loop only when remaining entries is larger than size,
       // since subarray of length "size" is already sorted
-      for (let i = 0; len - i > size; i += size * 2) {
+      for (let i = 0; i + size < n; i += size * 2) {
         const lo = i;
         const mid = lo + size - 1;
-        const hi = Math.min(len - 1, lo + size * 2 - 1); // capped in case out of index
+        const hi = Math.min(n - 1, lo + size * 2 - 1); // capped in case out of index
         this._merge(arr, aux, lo, mid, hi);
       }
     }
@@ -46,15 +46,17 @@ export default class MergeSort {
     const mid = lo + Math.floor((hi - lo) / 2);
     this._sort(arr, aux, lo, mid);
     this._sort(arr, aux, mid + 1, hi);
+
+    // improve2: check if already sorted
+    if (!less(arr[mid + 1], arr[mid])) {
+      return;
+    }
+
     this._merge(arr, aux, lo, mid, hi);
   }
 
   static _merge(arr, aux, lo, mid, hi) {
-    // improve2: check if already sorted
-    if (arr[mid] <= arr[mid + 1]) {
-      return;
-    }
-
+    // copy to aux[]
     for (let k = lo; k <= hi; k++) {
       aux[k] = arr[k];
     }
@@ -62,9 +64,9 @@ export default class MergeSort {
     let j = mid + 1;
     for (let k = lo; k <= hi; k++) {
       if (i > mid) {
-        // // improve3: skip copy as rightmost elements are already in place
-        // break;
-        arr[k] = aux[j++];
+        // improve3: skip copy as rightmost elements are already in place
+        break;
+        // arr[k] = aux[j++];
       } else if (j > hi) {
         arr[k] = aux[i++];
       } else if (less(aux[j], aux[i])) {

@@ -23,7 +23,7 @@ export class Dir {
       fs.statSync(fullpath).isDirectory() && fs.readdirSync(fullpath);
     if (subpaths) {
       subpaths.forEach((subpath) => {
-        dir(subpath, fullpath, indent + 1);
+        this.show(subpath, fullpath, indent + 1);
       });
     }
   }

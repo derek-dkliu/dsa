@@ -1,5 +1,6 @@
 import promptSync from "prompt-sync";
 import examples from "./examples/index.js";
+import exercises from "./exercises/index.js";
 import structures from "./structures/index.js";
 import sortings from "./sortings/index.js";
 import searchings from "./searchings/index.js";
@@ -17,6 +18,7 @@ function showHints() {
   console.log("(4) Graphs");
   console.log("(5) Strings");
   console.log("(6) Examples");
+  console.log("(7) Exercises");
   console.log("(0) Exit\n");
 }
 
@@ -42,6 +44,9 @@ while (!exit) {
       break;
     case 6:
       examples();
+      break;
+    case 7:
+      exercises();
       break;
     default:
       console.log("Bye.");

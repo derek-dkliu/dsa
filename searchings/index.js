@@ -65,6 +65,7 @@ export default function searchings(size = 20) {
   console.log(
     seq.toString(),
     BinarySearch.rank(seq, "E"),
-    BinarySearch.indexOf(seq, "E")
+    BinarySearch.indexOf(seq, "E"),
+    BinarySearch.searchDuplicates(seq, "E")
   );
 }

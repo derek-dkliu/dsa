@@ -2,9 +2,6 @@ import promptSync from "prompt-sync";
 import { banner } from "../common/utils.js";
 import { Dir } from "./dir.js";
 import { Percolation } from "./percolation.js";
-import { SuccessorUF } from "./successor-uf.js";
-import { Bitonic } from "./bitonic.js";
-import { ThreeSum } from "./three-sum.js";
 import { EvalArithmetic } from "./eval-arithmetic.js";
 import { KWIC } from "./kwic.js";
 import { LRS } from "./lrs.js";
@@ -14,9 +11,6 @@ const prompt = promptSync({ sigint: true });
 const COMMANDS = [
   ["Show directory", Dir],
   ["Percolation", Percolation],
-  ["Successor with delte", SuccessorUF],
-  ["Bitonic", Bitonic],
-  ["Three sum", ThreeSum],
   ["Evaluate expression", EvalArithmetic],
   ["Keyword in context", KWIC],
   ["Longest repeated substring", LRS],
@@ -24,7 +18,7 @@ const COMMANDS = [
 ];
 
 function showHints() {
-  banner("Examples & Explorations");
+  banner("Examples");
   COMMANDS.forEach((command, i) => {
     console.log(`(${i + 1}) ${command[0]}`);
   });

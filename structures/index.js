@@ -1,7 +1,7 @@
 import promptSync from "prompt-sync";
 import { banner } from "../common/utils.js";
 import { LinkedListStack, ResizingArrayStack } from "./stack.js";
-import { LinkedListQueue, ResizingArrayQueue } from "./queue.js";
+import { LinkedListQueue, Queue, ResizingArrayQueue } from "./queue.js";
 import { test as UnionFindTest } from "./union-find.js";
 
 const prompt = promptSync({ sigint: true });
@@ -31,12 +31,16 @@ export default function structures() {
               stack.push(item);
             }
           }
-          console.log(result, stack.size);
+          console.log(result, stack.size(), ...stack);
         }
         break;
       case 2:
         const seq2 = "to be or not to - be - - that - - - is".split(" ");
-        for (const queue of [new LinkedListQueue(), new ResizingArrayQueue()]) {
+        for (const queue of [
+          new LinkedListQueue(),
+          new ResizingArrayQueue(),
+          new Queue(),
+        ]) {
           const result = [];
           for (const item of seq2) {
             if (item === "-") {
@@ -45,7 +49,7 @@ export default function structures() {
               queue.enqueue(item);
             }
           }
-          console.log(result, queue.size);
+          console.log(result, queue.size(), ...queue);
         }
         break;
       case 3:
