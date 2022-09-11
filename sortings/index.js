@@ -30,9 +30,13 @@ export default function sortings(size = 20) {
     console.log("mergesort\t", isSorted(MergeSort.sort(seq)));
     console.log("mergesort(BU)\t", isSorted(MergeSort.sortBottomUp(seq)));
     console.log("merge x\t\t", isSorted(MergeX.sort(seq)));
-    // console.log("quickselect:\t", QuickSort.select(seq, 10));
     console.log("quicksort\t", isSorted(QuickSort.sort(seq)));
     console.log("quicksort(3Way)\t", isSorted(QuickSort3Way.sort(seq)));
+    console.log(
+      "quickselect:\t",
+      QuickSort.select(seq, 10),
+      QuickSort3Way.select(seq, 10)
+    );
     console.log("heapsort\t", isSorted(HeapSort.sort(seq)));
     // console.log("heapsort(PQ)\t", isSorted(HeapSort.pqSort(seq)));
     // console.log("heapsort(Keep)\t", HeapSort.keep(seq, 5));

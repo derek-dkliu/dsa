@@ -3,7 +3,7 @@ import { less, swap, shuffle, medianOfThree } from "../common/helpers.js";
 export class QuickSort {
   static CUTOFF = 10;
 
-  static select(seq, n) {
+  static select(seq, k) {
     if (!seq || seq.length === 0) {
       return null;
     }
@@ -12,15 +12,15 @@ export class QuickSort {
     let hi = arr.length - 1;
     while (lo <= hi) {
       const p = this._partition(arr, lo, hi);
-      if (p === n) {
+      if (k === p) {
         return arr[p];
-      } else if (p < n) {
-        lo = p + 1;
-      } else {
+      } else if (k < p) {
         hi = p - 1;
+      } else {
+        lo = p + 1;
       }
     }
-    return null;
+    return arr[lo];
   }
 
   static sort(seq) {
@@ -80,6 +80,26 @@ export class QuickSort {
 }
 
 export class QuickSort3Way {
+  static select(seq, k) {
+    if (!seq || seq.length === 0) {
+      return null;
+    }
+    const arr = shuffle(seq.slice());
+    let lo = 0;
+    let hi = arr.length - 1;
+    while (lo <= hi) {
+      const [lt, gt] = this._partition(arr, lo, hi);
+      if (k >= lt && k <= gt) {
+        return arr[lt];
+      } else if (k < lt) {
+        hi = lt - 1;
+      } else if (k > gt) {
+        lo = gt + 1;
+      }
+    }
+    return null;
+  }
+
   static sort(seq) {
     if (!seq || seq.length === 0) {
       return seq;
