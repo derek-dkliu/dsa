@@ -3,6 +3,8 @@ import { banner } from "../common/utils.js";
 import { Dir } from "./dir.js";
 import { Percolation } from "./percolation.js";
 import { EvalArithmetic } from "./eval-arithmetic.js";
+import { CollisionSystem } from "./collision-system.js";
+import { SliderPuzzle } from "./slider-puzzle.js";
 import { KWIC } from "./kwic.js";
 import { LRS } from "./lrs.js";
 
@@ -12,6 +14,8 @@ const COMMANDS = [
   ["Show directory", Dir],
   ["Percolation", Percolation],
   ["Evaluate expression", EvalArithmetic],
+  ["Particle collisions", CollisionSystem],
+  ["Slider puzzle", SliderPuzzle],
   ["Keyword in context", KWIC],
   ["Longest repeated substring", LRS],
   ["Back to main", null],

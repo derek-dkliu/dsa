@@ -9,6 +9,9 @@ import { StackWithMax } from "./stack-with-max.js";
 import { LinkedListShuffle } from "./linkedlist-shuffle.js";
 import { NutsAndBolts } from "./nuts-and-bolts.js";
 import { DecimalDominant } from "./decimal-dominant.js";
+import { DynamicMedian } from "./dyanimc-median.js";
+import { TaxicabNum } from "./taxicab-num.js";
+import { TopM } from "./top-m.js";
 
 const prompt = promptSync({ sigint: true });
 
@@ -22,6 +25,9 @@ const COMMANDS = [
   ["Shuffle linked list", LinkedListShuffle],
   ["Nuts and bolts", NutsAndBolts],
   ["Decimal dominant", DecimalDominant],
+  ["Top m number", TopM],
+  ["Dynamic median", DynamicMedian],
+  ["Taxicab number", TaxicabNum],
   ["Back to main", null],
 ];
 

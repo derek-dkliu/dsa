@@ -23,6 +23,10 @@ export default class PriorityQueue {
     return this.arr.length;
   }
 
+  peek() {
+    return this.arr[0];
+  }
+
   insert(item) {
     this.arr.push(item);
     this.swapUp(this.size() - 1);

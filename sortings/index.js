@@ -39,7 +39,6 @@ export default function sortings(size = 20) {
     );
     console.log("heapsort\t", isSorted(HeapSort.sort(seq)));
     // console.log("heapsort(PQ)\t", isSorted(HeapSort.pqSort(seq)));
-    // console.log("heapsort(Keep)\t", HeapSort.keep(seq, 5));
     console.log("LSD\t\t", isSorted(LSD.sort(seq)));
     console.log("MSD\t\t", isSorted(MSD.sort(seq)));
     console.log("quick3string\t", isSorted(Quick3String.sort(seq)));

@@ -5,11 +5,12 @@ export default class HeapSort {
   static sort(seq) {
     const arr = seq.slice();
     let size = arr.length;
-    const start = Math.floor((arr.length - 1) / 2);
+    // get last non leaf
+    const start = Math.floor((arr.length - 1 - 1) / 2);
     for (let i = start; i >= 0; i--) {
       this.swapDown(arr, i, size);
     }
-    while (size > 0) {
+    while (size > 1) {
       swap(arr, 0, --size);
       this.swapDown(arr, 0, size);
     }
@@ -17,6 +18,7 @@ export default class HeapSort {
   }
 
   static swapDown(arr, i, size) {
+    // continue when have at least a left child
     while (i * 2 + 1 < size) {
       let j = i * 2 + 1;
       if (j + 1 < size && less(arr[j], arr[j + 1])) {
@@ -43,17 +45,6 @@ export default class HeapSort {
       swap(pq.arr, 0, --size);
       pq.swapDown(0, size);
     }
-    return pq.getData();
-  }
-
-  static keep(seq, capicity, maxpq) {
-    const pq = new PriorityQueue({ maxpq });
-    seq.forEach((val) => {
-      pq.insert(val);
-      if (pq.size() > capicity) {
-        pq.delete();
-      }
-    });
     return pq.getData();
   }
 }
