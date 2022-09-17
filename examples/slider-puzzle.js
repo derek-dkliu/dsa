@@ -1,5 +1,6 @@
 import PriorityQueue from "../structures/priority-queue.js";
 import { Stack } from "../structures/stack.js";
+import { Queue } from "../structures/queue.js";
 import { banner } from "../common/utils.js";
 import { sequence } from "../common/helpers.js";
 
@@ -17,13 +18,16 @@ export class SliderPuzzle {
       // [0, 1, 2, 3, 4, 5, 6, 7, 8],
       // [1, 2, 3, 4, 5, 6, 8, 7, 0],
     ];
-    cases.forEach((tiles, index) => {
-      const board = new Board(tiles);
-      const solver = new Solver(board);
-      banner(`CASE ${index + 1}:`.padEnd(10) + tiles.toString());
-      console.log("Total moves:", solver.getMoves());
-      console.log(solver.getSolution());
-    });
+    // cases.forEach((tiles, index) => {
+    //   const board = new Board(tiles);
+    //   const solver = new Solver(board);
+    //   banner(`CASE ${index + 1}:`.padEnd(10) + tiles.toString());
+    //   console.log("Total moves:", solver.getMoves());
+    //   console.log(solver.getSolution());
+    // });
+
+    // solve all
+    puzzle(n);
   }
 }
 
@@ -36,7 +40,7 @@ class Solver {
     if (!board.solvable()) return;
 
     const visited = new Set();
-    visited.add(board.toString());
+    visited.add(board.signature());
     const pq = new PriorityQueue(false);
     pq.insert(new Node(board, null, 0));
 
@@ -47,10 +51,10 @@ class Solver {
         break;
       }
       for (const neighbor of node.board.neighbors()) {
-        const sig = neighbor.toString();
-        if (!visited.has(sig)) {
+        const sign = neighbor.signature();
+        if (!visited.has(sign)) {
           pq.insert(new Node(neighbor, node, node.move + 1));
-          visited.add(sig);
+          visited.add(sign);
         }
       }
     }
@@ -71,10 +75,10 @@ class Solver {
     //       break;
     //     }
     //     for (const neighbor of node.board.neighbors()) {
-    //       const sig = neighbor.toString();
-    //       if (!visited.has(sig)) {
+    //       const sign = neighbor.signature();
+    //       if (!visited.has(sign)) {
     //         pq.insert(new Node(neighbor, node, node.move + 1));
-    //         visited.add(sig);
+    //         visited.add(sign);
     //       }
     //     }
     //   }
@@ -84,10 +88,10 @@ class Solver {
     //       break;
     //     }
     //     for (const neighbor of node.board.neighbors()) {
-    //       const sig = neighbor.toString();
-    //       if (!visited2.has(sig)) {
+    //       const sign = neighbor.signature();
+    //       if (!visited2.has(sign)) {
     //         pq2.insert(new Node(neighbor, node, node.move + 1));
-    //         visited2.add(sig);
+    //         visited2.add(sign);
     //       }
     //     }
     //   }
@@ -117,11 +121,11 @@ class Solver {
 }
 
 class Node {
-  constructor(board, prev, move) {
+  constructor(board, prev, move, priority = true) {
     this.board = board;
     this.prev = prev;
     this.move = move;
-    this.priority = move + board.manhattan();
+    this.priority = priority ? move + board.manhattan() : 0;
   }
 
   compare(that) {
@@ -300,9 +304,67 @@ class Board {
     return n % 2 === 1 ? inversion % 2 === 0 : (inversion + blank) % 2 === 1;
   }
 
+  signature() {
+    return this.tiles.map((row) => row.join("")).join("");
+  }
+
   toString() {
     return this.tiles.map((row) => row.join(" ")).join("\n");
   }
+}
+
+function puzzle(n) {
+  const [map, total] = bfs(n);
+  const num = n * n - 1;
+  const max = map.size - 1;
+  const boards = map.get(max);
+  banner(`${num}-puzzle (total: ${total})`);
+  console.log(
+    [...map.entries()]
+      .map((entry) => entry[0] + " => " + entry[1].length)
+      .join("\n")
+  );
+  console.log(`\nMax moves: ${max} (${boards.length}/${total})`);
+  console.log(boards.map((b) => b.toString()).join("\n\n"));
+}
+
+function bfs(n) {
+  // create a goal board
+  const goal = [];
+  for (let i = 0; i < n; i++) {
+    goal[i] = [];
+    for (let j = 0; j < n; j++) {
+      goal[i][j] = i * n + j + 1;
+    }
+  }
+  goal[n - 1][n - 1] = 0;
+  const root = new Board(goal);
+
+  // search all boards from goal board using BFS
+  const result = [];
+  const visited = new Set();
+  visited.add(root.signature());
+  const q = new Queue();
+  q.enqueue(new Node(root, null, 0, false));
+  while (!q.isEmpty()) {
+    const node = q.dequeue();
+    result.push(node);
+    for (const neighbor of node.board.neighbors()) {
+      const sign = neighbor.signature();
+      if (!visited.has(sign)) {
+        q.enqueue(new Node(neighbor, node, node.move + 1, false));
+        visited.add(sign);
+      }
+    }
+  }
+  const total = result.length;
+  const map = new Map();
+  for (const node of result) {
+    const boards = map.get(node.move) || [];
+    boards.push(node.board);
+    map.set(node.move, boards);
+  }
+  return [map, total];
 }
 
 class Merge {

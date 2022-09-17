@@ -1,7 +1,9 @@
 import promptSync from "prompt-sync";
 import { banner } from "../common/utils.js";
 import { SuccessorUF } from "./successor-uf.js";
+import { ArrayRotation } from "./array-rotation.js";
 import { Bitonic } from "./bitonic.js";
+import { MissingInteger } from "./missing-integer.js";
 import { KthTwoSortedArrays } from "./kth-two-sorted-arrays.js";
 import { ThreeSum } from "./three-sum.js";
 import { Queue2Stacks } from "./queue-2stacks.js";
@@ -16,8 +18,10 @@ import { TopM } from "./top-m.js";
 const prompt = promptSync({ sigint: true });
 
 const COMMANDS = [
-  ["Successor with delte", SuccessorUF],
+  ["Successor with delete", SuccessorUF],
+  ["Array rotation", ArrayRotation],
   ["Bitonic", Bitonic],
+  ["Missing integer", MissingInteger],
   ["K-th of two sorted arrays", KthTwoSortedArrays],
   ["Three sum", ThreeSum],
   ["Queue with 2 stacks", Queue2Stacks],

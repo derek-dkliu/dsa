@@ -165,7 +165,7 @@ export class Queue {
   adjust() {
     if (this.q.length > 20 && this.head > this.q.length / 2) {
       const copy = [];
-      const n = this.n;
+      const n = this.size();
       for (let i = 0; i < n; i++) {
         copy[i] = this.q[(this.head + i) % this.q.length];
       }
