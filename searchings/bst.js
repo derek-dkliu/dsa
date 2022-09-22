@@ -99,7 +99,7 @@ export default class BST {
   }
 
   deleteMin() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty()) throw Error("BST underflow");
     this.root = this._deleteMin(this.root);
   }
 
@@ -111,7 +111,7 @@ export default class BST {
   }
 
   deleteMax() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty()) throw Error("BST underflow");
     this.root = this._deleteMax(this.root);
   }
 
@@ -230,6 +230,27 @@ export default class BST {
     } else {
       return this.rank(hi) - this.rank(lo);
     }
+  }
+
+  rangeSize(lo, hi) {
+    if (lo === null) throw new Error("lo key cannot be null");
+    if (hi === null) throw new Error("hi key cannot be null");
+    return this._rangeSize(this.root, lo, hi);
+  }
+
+  _rangeSize(node, lo, hi) {
+    if (node === null) return 0;
+    let size = 0;
+    if (!less(node.key, lo) && !less(hi, node.key)) {
+      size += 1;
+    }
+    if (less(lo, node.key)) {
+      size += this._rangeSize(node.left, lo, hi);
+    }
+    if (less(node.key, hi)) {
+      size += this._rangeSize(node.right, lo, hi);
+    }
+    return size;
   }
 
   rangeSearch(lo, hi) {

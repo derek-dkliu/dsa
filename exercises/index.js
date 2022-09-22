@@ -2,6 +2,7 @@ import promptSync from "prompt-sync";
 import { banner } from "../common/utils.js";
 import { SuccessorUF } from "./successor-uf.js";
 import { ArrayRotation } from "./array-rotation.js";
+import { SevenSegment } from "./seven-segment.js";
 import { Bitonic } from "./bitonic.js";
 import { MissingInteger } from "./missing-integer.js";
 import { KthTwoSortedArrays } from "./kth-two-sorted-arrays.js";
@@ -14,12 +15,14 @@ import { DecimalDominant } from "./decimal-dominant.js";
 import { DynamicMedian } from "./dyanimc-median.js";
 import { TaxicabNum } from "./taxicab-num.js";
 import { TopM } from "./top-m.js";
+import { BinaryTree } from "./binary-tree.js";
 
 const prompt = promptSync({ sigint: true });
 
 const COMMANDS = [
-  ["Successor with delete", SuccessorUF],
   ["Array rotation", ArrayRotation],
+  ["Seven segment device", SevenSegment],
+  ["Successor with delete", SuccessorUF],
   ["Bitonic", Bitonic],
   ["Missing integer", MissingInteger],
   ["K-th of two sorted arrays", KthTwoSortedArrays],
@@ -32,6 +35,7 @@ const COMMANDS = [
   ["Top m number", TopM],
   ["Dynamic median", DynamicMedian],
   ["Taxicab number", TaxicabNum],
+  ["Binary tree", BinaryTree],
   ["Back to main", null],
 ];
 

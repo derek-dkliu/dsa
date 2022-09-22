@@ -42,7 +42,11 @@ export default function searchings(size = 20) {
       console.log(`get(${key})`, bst.get(key) === key, bst.get2(key) === key);
       console.log(`select(${mid})`, bst.select(mid) === key, key);
       console.log(`rank(${key})`, bst.rank(key) === mid, mid);
-      console.log(`rangeCount(${key1}, ${key2})`, bst.rangeCount(key1, key2));
+      console.log(
+        `rangeCount(${key1}, ${key2})`,
+        bst.rangeCount(key1, key2),
+        bst.rangeSize(key1, key2)
+      );
       console.log(`rangeSearch(${key1}, ${key2})`, bst.rangeSearch(key1, key2));
       console.log(`delete(${key})`, bst.delete(key), ...bst.inorder());
       console.log("deleteMin", bst.deleteMin(), ...bst.inorder());
