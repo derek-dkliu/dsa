@@ -6,7 +6,13 @@ import BST from "./bst.js";
 import LLRB from "./llrb.js";
 import { LinearProbing, SeparateChaining } from "./hashtable.js";
 
-export default function searchings(size = 20) {
+export default function searchings() {
+  testBSTs();
+  testHashings();
+}
+
+function testBSTs() {
+  const size = 20;
   const cases = [
     // sequence(size, { order: false }),
     // sequence(size),
@@ -31,7 +37,7 @@ export default function searchings(size = 20) {
       console.log("min", bst.min());
       console.log("max", bst.max());
       console.log("size", bst.size());
-      console.log(`floor(${k0})`, bst.floor(k0));
+      console.log(`floor(${k0})`, bst.floor(k0), bst.floor2(k0));
       console.log(`ceil(${k0})`, bst.ceil(k0));
       const mid = Math.floor(bst.size() / 2);
       const key = inorderSeq[mid];
@@ -45,16 +51,19 @@ export default function searchings(size = 20) {
       console.log(
         `rangeCount(${key1}, ${key2})`,
         bst.rangeCount(key1, key2),
-        bst.rangeSize(key1, key2)
+        bst.rangeCount2(key1, key2)
       );
       console.log(`rangeSearch(${key1}, ${key2})`, bst.rangeSearch(key1, key2));
       console.log(`delete(${key})`, bst.delete(key), ...bst.inorder());
       console.log("deleteMin", bst.deleteMin(), ...bst.inorder());
       console.log("deleteMax", bst.deleteMax(), ...bst.inorder());
+      console.log("putMinNull", bst.put(bst.min(), null), ...bst.inorder());
       console.log();
     }
   });
+}
 
+function testHashings() {
   const m1 = Math.floor(COLORS.length / 5);
   const m2 = COLORS.length * 2;
   const r = randomInt(0, COLORS.length - 1);

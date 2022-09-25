@@ -58,6 +58,10 @@ export default class BST {
 
   put(key, val) {
     if (key === null) throw new Error("null key is not allowed");
+    if (val === null) {
+      this.delete(key);
+      return;
+    }
     this.root = this._put(this.root, key, val);
   }
 
@@ -160,6 +164,19 @@ export default class BST {
     }
   }
 
+  floor2(key) {
+    if (key === null) throw new Error("null key is not allowed");
+    const node = this._floor2(this.root, key, null);
+    return node === null ? null : node.key;
+  }
+
+  _floor2(node, key, best) {
+    if (node === null) return best;
+    if (less(key, node.key)) return this._floor2(node.left, key, best);
+    else if (less(node.key, key)) return this._floor(node.right, key, node);
+    else return node;
+  }
+
   ceil(key) {
     if (key === null) throw new Error("null key is not allowed");
     const node = this._ceil(this.root, key);
@@ -221,6 +238,11 @@ export default class BST {
     }
   }
 
+  keys() {
+    if (this.isEmpty()) return null;
+    return this.rangeSearch(this.min(), this.max());
+  }
+
   rangeCount(lo, hi) {
     if (lo === null) throw new Error("lo key cannot be null");
     if (hi === null) throw new Error("hi key cannot be null");
@@ -232,23 +254,24 @@ export default class BST {
     }
   }
 
-  rangeSize(lo, hi) {
+  rangeCount2(lo, hi) {
     if (lo === null) throw new Error("lo key cannot be null");
     if (hi === null) throw new Error("hi key cannot be null");
-    return this._rangeSize(this.root, lo, hi);
+    if (less(hi, lo)) return 0;
+    return this._rangeCount2(this.root, lo, hi);
   }
 
-  _rangeSize(node, lo, hi) {
+  _rangeCount2(node, lo, hi) {
     if (node === null) return 0;
     let size = 0;
     if (!less(node.key, lo) && !less(hi, node.key)) {
       size += 1;
     }
     if (less(lo, node.key)) {
-      size += this._rangeSize(node.left, lo, hi);
+      size += this._rangeCount2(node.left, lo, hi);
     }
     if (less(node.key, hi)) {
-      size += this._rangeSize(node.right, lo, hi);
+      size += this._rangeCount2(node.right, lo, hi);
     }
     return size;
   }
@@ -289,6 +312,7 @@ export default class BST {
   }
 
   levelorder() {
+    if (this.isEmpty()) return [];
     const result = [];
     const queue = new Queue();
     queue.enqueue(this.root);
