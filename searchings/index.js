@@ -4,11 +4,15 @@ import { COLORS } from "../data/data.js";
 import BinarySearch from "./binary-search.js";
 import BST from "./bst.js";
 import LLRB from "./llrb.js";
+import KdTree from "./kd-tree.js";
+import IntervalSearchTree from "./interval-search-tree.js";
 import { LinearProbing, SeparateChaining } from "./hashtable.js";
 
 export default function searchings() {
   testBSTs();
-  testHashings();
+  testKdTrees();
+  testIntervalSearchTrees();
+  // testHashTables();
 }
 
 function testBSTs() {
@@ -63,7 +67,51 @@ function testBSTs() {
   });
 }
 
-function testHashings() {
+function testKdTrees() {
+  const points = [
+    [5, 5],
+    [8, 4],
+    [3, 6],
+    [2, 1],
+    [1, 5.5],
+    [4, 6.5],
+    [6, 3],
+    [11, 8],
+    [10, 7],
+    [7, 2],
+  ];
+  const rect = [
+    [1.5, 3],
+    [0.5, 7],
+  ];
+  console.log("2d range search:", KdTree.search(points, rect));
+  console.log("Nearest neighbor:", KdTree.nearest(points, [0.5, 6.1]));
+  console.log();
+}
+
+function testIntervalSearchTrees() {
+  const intervals = [
+    [17, 19],
+    [5, 8],
+    [4, 8],
+    [21, 24],
+    [15, 18],
+    [16, 22],
+    [7, 10],
+  ];
+  const tree = new IntervalSearchTree();
+  for (const [key1, key2] of intervals) {
+    tree.insert(key1, key2);
+  }
+  const query1 = [21, 23];
+  const query2 = [12, 14];
+  console.log("Interval search:");
+  console.log(query1, tree.search(...query1));
+  console.log(query2, tree.search(...query2));
+  console.log();
+}
+
+function testHashTables() {
   const m1 = Math.floor(COLORS.length / 5);
   const m2 = COLORS.length * 2;
   const r = randomInt(0, COLORS.length - 1);

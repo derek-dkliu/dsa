@@ -277,7 +277,7 @@ export default class LLRB {
   }
 
   keys() {
-    if (this.isEmpty()) return null;
+    if (this.isEmpty()) return [];
     return this.rangeSearch(this.min(), this.max());
   }
 
