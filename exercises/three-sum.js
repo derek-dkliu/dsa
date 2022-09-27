@@ -3,12 +3,64 @@ import BinarySearch from "../searchings/binary-search.js";
 export class ThreeSum {
   static run() {
     const arr = [30, -40, -20, -10, 40, 0, 10, 15];
-    const result = ThreeSum.search(arr);
+    const result1 = ThreeSum.searchHashMap(arr);
+    const result2 = ThreeSum.searchHashMap2(arr);
+    const result3 = ThreeSum.search2Pointer(arr);
+    const result4 = ThreeSum.binarysearch(arr);
     console.log(arr.toString());
-    console.log(result.length, result);
+    console.log(result1.length, result1);
+    console.log(result2.length, result2);
+    console.log(result3.length, result3);
+    console.log(result4.length, result4);
   }
 
-  static search(arr) {
+  static searchHashMap(arr) {
+    const result = [];
+    const N = arr.length;
+    for (let i = 0; i < N - 1; i++) {
+      const set = new Set();
+      for (let j = i + 1; j < N; j++) {
+        const x = -(arr[i] + arr[j]);
+        if (set.has(x)) {
+          result.push([x, arr[i], arr[j]]);
+          // because input is array of distinct elements
+        } else {
+          set.add(arr[j]);
+        }
+      }
+    }
+    return result;
+  }
+
+  static searchHashMap2(arr) {
+    const map = new Map();
+    const N = arr.length;
+    // following loop order ensures indices in map is sorted by j index
+    for (let j = 1; j < N - 1; j++) {
+      for (let i = 0; i < j; i++) {
+        const key = -(arr[i] + arr[j]);
+        const indices = map.get(key) || [];
+        indices.push([i, j]);
+        map.set(key, indices);
+      }
+    }
+    const result = [];
+    for (let k = 2; k < N; k++) {
+      const indices = map.get(arr[k]);
+      if (indices) {
+        for (const [i, j] of indices) {
+          if (k > j) {
+            result.push([arr[i], arr[j], arr[k]]);
+          } else {
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  static search2Pointer(arr) {
     arr.sort((a, b) => a - b);
     const N = arr.length;
     const result = [];

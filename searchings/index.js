@@ -9,10 +9,10 @@ import IntervalSearchTree from "./interval-search-tree.js";
 import { LinearProbing, SeparateChaining } from "./hashtable.js";
 
 export default function searchings() {
-  testBSTs();
-  testKdTrees();
-  testIntervalSearchTrees();
-  // testHashTables();
+  // testBSTs();
+  // testKdTrees();
+  // testIntervalSearchTrees();
+  testHashTables();
 }
 
 function testBSTs() {
@@ -112,14 +112,15 @@ function testIntervalSearchTrees() {
 }
 
 function testHashTables() {
-  const m1 = Math.floor(COLORS.length / 5);
-  const m2 = COLORS.length * 2;
   const r = randomInt(0, COLORS.length - 1);
-  for (const ht of [new SeparateChaining(m1), new LinearProbing(m2)]) {
+  const key = COLORS[r];
+  for (const ht of [new SeparateChaining(), new LinearProbing()]) {
     COLORS.forEach((color, i) => ht.put(color, i));
     console.log(ht.constructor.name);
     console.log(ht.toString());
-    console.log(COLORS[r], ht.hash(COLORS[r]), ht.get(COLORS[r]), "\n");
+    console.log(key, r, ht.hash(key), ht.m, ht.get(key) === r, "\n");
+    ht.delete(key);
+    console.log(ht.toString());
   }
 
   const seq = randomSeq(20, { numeric: false, unique: false }).sort();

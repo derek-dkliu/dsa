@@ -6,6 +6,7 @@ import { Bitonic } from "./bitonic.js";
 import { MissingInteger } from "./missing-integer.js";
 import { KthTwoSortedArrays } from "./kth-two-sorted-arrays.js";
 import { ThreeSum } from "./three-sum.js";
+import { FourSum } from "./four-sum.js";
 import { Queue2Stacks } from "./queue-2stacks.js";
 import { StackWithMax } from "./stack-with-max.js";
 import { LinkedListShuffle } from "./linkedlist-shuffle.js";
@@ -27,6 +28,7 @@ const COMMANDS = [
   ["Missing integer", MissingInteger],
   ["K-th of two sorted arrays", KthTwoSortedArrays],
   ["Three sum", ThreeSum],
+  ["Four sum", FourSum],
   ["Queue with 2 stacks", Queue2Stacks],
   ["Stack with max", StackWithMax],
   ["Shuffle linked list", LinkedListShuffle],
