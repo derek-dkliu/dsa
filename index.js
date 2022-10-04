@@ -1,11 +1,11 @@
 import promptSync from "prompt-sync";
-import examples from "./examples/index.js";
-import exercises from "./exercises/index.js";
 import structures from "./structures/index.js";
 import sortings from "./sortings/index.js";
 import searchings from "./searchings/index.js";
 import strings from "./strings/index.js";
 import graphs from "./graphs/index.js";
+import examples from "./examples/index.js";
+import experiments from "./experiments/index.js";
 import { banner } from "./common/utils.js";
 
 const prompt = promptSync({ sigint: true });
@@ -18,7 +18,7 @@ function showHints() {
   console.log("(4) Graphs");
   console.log("(5) Strings");
   console.log("(6) Examples");
-  console.log("(7) Exercises");
+  console.log("(7) Experiments");
   console.log("(0) Exit\n");
 }
 
@@ -46,7 +46,7 @@ while (!exit) {
       examples();
       break;
     case 7:
-      exercises();
+      experiments();
       break;
     default:
       console.log("Bye.");

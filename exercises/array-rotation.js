@@ -1,24 +1,7 @@
 import { sequence } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
 
-export class ArrayRotation {
-  static run() {
-    const size = 10;
-    const cases = [sequence(size, { numeric: false })];
-    for (const solution of [Solution1, Solution2, Solution3]) {
-      cases.forEach((seq, index) => {
-        banner(
-          `[${solution.name}] CASE ${index + 1}:`.padEnd(10) + seq.toString()
-        );
-        for (let i = 0; i < size; i++) {
-          console.log(i, ...solution.rotate(seq, i));
-        }
-      });
-    }
-  }
-}
-
-class Solution1 {
+class Shifting {
   static rotate(seq, d) {
     const arr = seq.slice();
     const n = arr.length;
@@ -51,7 +34,7 @@ class Solution1 {
   }
 }
 
-class Solution2 {
+class BlockSwap {
   static rotate(seq, d) {
     const arr = seq.slice();
     d = d % arr.length;
@@ -87,7 +70,7 @@ class Solution2 {
   }
 }
 
-class Solution3 {
+class Reversion {
   static rotate(seq, d) {
     const arr = seq.slice();
     const n = arr.length;
@@ -110,3 +93,22 @@ class Solution3 {
     }
   }
 }
+
+class ArrayRotation {
+  static run() {
+    const size = 10;
+    const cases = [sequence(size, { numeric: false })];
+    for (const solution of [Shifting, BlockSwap, Reversion]) {
+      cases.forEach((seq, index) => {
+        banner(
+          `[${solution.name}] CASE ${index + 1}:`.padEnd(10) + seq.toString()
+        );
+        for (let i = 0; i < size; i++) {
+          console.log(i, ...solution.rotate(seq, i));
+        }
+      });
+    }
+  }
+}
+
+ArrayRotation.run();

@@ -1,19 +1,7 @@
 import { randomSeq } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
 
-export class MissingInteger {
-  static run() {
-    const size = 19;
-    const cases = [
-      randomSeq(size, { unique: false }),
-      randomSeq(size, { unique: false }),
-    ];
-    cases.forEach((seq, index) => {
-      banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
-      console.log(this.search(seq, 1, size + 1));
-    });
-  }
-
+class MissingInteger {
   static search(arr, lo, hi) {
     if (lo === hi || arr.length === 0) {
       return lo;
@@ -38,4 +26,18 @@ export class MissingInteger {
       throw new Error(`Invalid range: ${lo} - ${hi}`);
     }
   }
+
+  static run() {
+    const size = 19;
+    const cases = [
+      randomSeq(size, { unique: false }),
+      randomSeq(size, { unique: false }),
+    ];
+    cases.forEach((seq, index) => {
+      banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
+      console.log(this.search(seq, 1, size + 1));
+    });
+  }
 }
+
+MissingInteger.run();

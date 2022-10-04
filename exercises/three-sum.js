@@ -1,20 +1,7 @@
 import BinarySearch from "../searchings/binary-search.js";
 
-export class ThreeSum {
-  static run() {
-    const arr = [30, -40, -20, -10, 40, 0, 10, 15];
-    const result1 = ThreeSum.searchHashMap(arr);
-    const result2 = ThreeSum.searchHashMap2(arr);
-    const result3 = ThreeSum.search2Pointer(arr);
-    const result4 = ThreeSum.binarysearch(arr);
-    console.log(arr.toString());
-    console.log(result1.length, result1);
-    console.log(result2.length, result2);
-    console.log(result3.length, result3);
-    console.log(result4.length, result4);
-  }
-
-  static searchHashMap(arr) {
+class HashMap {
+  static search(arr) {
     const result = [];
     const N = arr.length;
     for (let i = 0; i < N - 1; i++) {
@@ -31,8 +18,10 @@ export class ThreeSum {
     }
     return result;
   }
+}
 
-  static searchHashMap2(arr) {
+class HashMap2 {
+  static search(arr) {
     const map = new Map();
     const N = arr.length;
     // following loop order ensures indices in map is sorted by j index
@@ -59,8 +48,10 @@ export class ThreeSum {
     }
     return result;
   }
+}
 
-  static search2Pointer(arr) {
+class TwoPointers {
+  static search(arr) {
     arr.sort((a, b) => a - b);
     const N = arr.length;
     const result = [];
@@ -80,8 +71,10 @@ export class ThreeSum {
     }
     return result;
   }
+}
 
-  static binarysearch(arr) {
+class Binarysearch {
+  static search(arr) {
     arr.sort((a, b) => a - b);
     if (this.checkDuplicates(arr))
       throw new Error("Array contains duplicate integers");
@@ -112,3 +105,20 @@ export class ThreeSum {
     return false;
   }
 }
+
+class ThreeSum {
+  static run() {
+    const arr = [30, -40, -20, -10, 40, 0, 10, 15];
+    const result1 = HashMap.search(arr);
+    const result2 = HashMap2.search(arr);
+    const result3 = TwoPointers.search(arr);
+    const result4 = Binarysearch.search(arr);
+    console.log(arr.toString());
+    console.log(result1.length, result1);
+    console.log(result2.length, result2);
+    console.log(result3.length, result3);
+    console.log(result4.length, result4);
+  }
+}
+
+ThreeSum.run();

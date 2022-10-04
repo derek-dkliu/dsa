@@ -31,11 +31,11 @@ export class Queue2Stacks {
   }
 
   isEmpty() {
-    return this.getSize() === 0;
+    return this.size() === 0;
   }
 
-  getSize() {
-    return this.enstack.getSize() + this.destack.getSize();
+  size() {
+    return this.enstack.size() + this.destack.size();
   }
 
   enqueue(item) {

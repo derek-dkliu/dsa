@@ -16,11 +16,6 @@ export class CollisionSystem {
     }
   }
 
-  static run() {
-    const system = new CollisionSystem(10);
-    system.simulate();
-  }
-
   predict(a) {
     if (!a) return;
 
@@ -42,6 +37,8 @@ export class CollisionSystem {
       const e = this.pq.delete();
       if (!e.isValid()) continue;
 
+      console.log("time", e.time);
+
       // update positions
       const dt = e.time - this.t;
       for (const particle of this.particles) {
@@ -61,6 +58,11 @@ export class CollisionSystem {
       this.predict(a);
       this.predict(b);
     }
+  }
+
+  static run() {
+    const system = new CollisionSystem(10);
+    system.simulate();
   }
 }
 

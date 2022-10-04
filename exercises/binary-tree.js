@@ -3,38 +3,9 @@ import { banner } from "../common/utils.js";
 import { Queue } from "../structures/queue.js";
 import { Stack } from "../structures/stack.js";
 
-export class BinaryTree {
+class BinaryTree {
   constructor() {
     this.root = null;
-  }
-
-  static run() {
-    const size = 20;
-    const cases = [
-      sequence(size, { order: false }),
-      [3, 2, 5, 1, 4],
-      [6, 2, 7, 1, 4, 3, 5],
-    ];
-    cases.forEach((seq, index) => {
-      banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
-      const tree = new BinaryTree();
-      if (index === cases.length - 1) {
-        seq.forEach((x) => tree.insert(x));
-        console.log(...tree.levelorder());
-        console.log(...tree.inorder());
-        console.log(...tree.inorder2());
-        console.log(...tree.inorder3());
-        console.log(tree.isBST());
-        const tmp = tree.root.key;
-        tree.root.key = tree.root.left.right.right.key;
-        tree.root.left.right.right.key = tmp;
-      } else {
-        seq.forEach((x) => tree.append(x));
-      }
-      console.log(...tree.levelorder());
-      console.log(...tree.inorder());
-      console.log(tree.isBST());
-    });
   }
 
   size() {
@@ -208,3 +179,36 @@ class Node {
     this.size = 1;
   }
 }
+
+class BinaryTreeClient {
+  static run() {
+    const size = 20;
+    const cases = [
+      sequence(size, { order: false }),
+      [3, 2, 5, 1, 4],
+      [6, 2, 7, 1, 4, 3, 5],
+    ];
+    cases.forEach((seq, index) => {
+      banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
+      const tree = new BinaryTree();
+      if (index === cases.length - 1) {
+        seq.forEach((x) => tree.insert(x));
+        console.log(...tree.levelorder());
+        console.log(...tree.inorder());
+        console.log(...tree.inorder2());
+        console.log(...tree.inorder3());
+        console.log(tree.isBST());
+        const tmp = tree.root.key;
+        tree.root.key = tree.root.left.right.right.key;
+        tree.root.left.right.right.key = tmp;
+      } else {
+        seq.forEach((x) => tree.append(x));
+      }
+      console.log(...tree.levelorder());
+      console.log(...tree.inorder());
+      console.log(tree.isBST());
+    });
+  }
+}
+
+BinaryTreeClient.run();

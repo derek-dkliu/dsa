@@ -2,7 +2,7 @@ import PriorityQueue from "../structures/priority-queue.js";
 import { randomSeq, sequence } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
 
-export class TopM {
+class TopM {
   static find(seq, m) {
     const minpq = new PriorityQueue(false);
     for (const x of seq) {
@@ -28,3 +28,5 @@ export class TopM {
     });
   }
 }
+
+TopM.run();
