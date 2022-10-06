@@ -80,23 +80,44 @@ class Node {
 class DynamicProgramming {
   static search(values, weights, limit) {
     const n = values.length;
-    const knapsack = [];
-    for (let i = 0; i < n; i++) {
-      knapsack[i] = [0];
+    const opt = []; // max value
+    const sol = []; // item included?
+    for (let i = 0; i <= n; i++) {
+      opt[i] = [0];
+      sol[i] = [];
+    }
+    for (let j = 0; j <= limit; j++) opt[0][j] = 0;
+    for (let i = 1; i <= n; i++) {
       for (let j = 1; j <= limit; j++) {
-        const old = i - 1 < 0 ? 0 : knapsack[i - 1][j];
-        if (weights[i] > j) {
-          knapsack[i][j] = old;
-        } else {
-          knapsack[i][j] = Math.max(
-            old,
-            values[i] + (i - 1 < 0 ? 0 : knapsack[i - 1][j - weights[i]])
-          );
+        // don't take item i
+        const option1 = opt[i - 1][j];
+        // take item i
+        let option2 = -Infinity;
+        // minus one since values and weights start from 0
+        if (weights[i - 1] <= j) {
+          option2 = values[i - 1] + opt[i - 1][j - weights[i - 1]];
         }
+        // select better of two options
+        opt[i][j] = Math.max(option1, option2);
+        sol[i][j] = option2 > option1;
       }
     }
-    const max = knapsack[n - 1][limit];
-    console.log("max", max);
+    const max = opt[n][limit];
+    console.log(max, this.getItems(sol, limit, values, weights));
+  }
+
+  static getItems(sol, limit, values, weights) {
+    const n = values.length;
+    const take = [];
+    for (let i = n, w = limit; i > 0; i--) {
+      if (sol[i][w]) {
+        take[i - 1] = true;
+        w = w - weights[i - 1];
+      } else {
+        take[i - 1] = false;
+      }
+    }
+    return values.filter((_, i) => take[i]);
   }
 }
 

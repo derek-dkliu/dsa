@@ -12,7 +12,7 @@ class Permutation {
       return;
     }
     for (let i = 0; i < seq.length; i++) {
-      const rest = seq.slice(0, i) + seq.slice(i + 1, seq.length);
+      const rest = seq.slice(0, i) + seq.slice(i + 1);
       this._generate(curr + seq[i], rest, result);
     }
   }
@@ -57,7 +57,7 @@ class PermutationK {
       return;
     }
     for (let i = 0; i < seq.length; i++) {
-      const rest = seq.slice(0, i) + seq.slice(i + 1, seq.length);
+      const rest = seq.slice(0, i) + seq.slice(i + 1);
       this._generate(curr + seq[i], rest, k, result);
     }
   }
@@ -90,5 +90,5 @@ class PermutationK {
 
 console.log(Permutation.generate(3));
 console.log(Permutation.generate2(3));
-console.log(PermutationK.generate(3, 3));
-console.log(PermutationK.generate2(3, 3));
+console.log(PermutationK.generate(3, 2));
+console.log(PermutationK.generate2(3, 2));
