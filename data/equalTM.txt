@@ -1,0 +1,9 @@
+7
+abx#
+L 0001 abx#
+R 2314 xxx#
+R 2025 axx#
+R 0336 xbx#
+Y
+N
+N
