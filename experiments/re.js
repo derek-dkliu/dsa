@@ -33,20 +33,30 @@ class RE {
 
       if (re[i] === "(" || re[i] === "|") ops.push(i);
       else if (re[i] === ")") {
-        const or = ops.pop();
-        if (re[or] === "|") {
+        const x = ops.pop();
+        if (re[x] === "|") {
           lp = ops.pop();
-          G.addEdge(lp, or + 1);
-          G.addEdge(or, i);
+          const ors = [x];
+          while (re[lp] === "|") {
+            ors.push(lp);
+            lp = ops.pop();
+          }
+          for (const or of ors) {
+            G.addEdge(lp, or + 1);
+            G.addEdge(or, i);
+          }
         } else {
-          lp = or;
+          lp = x;
         }
       }
       if (i < M - 1 && re[i + 1] === "*") {
         G.addEdge(lp, i + 1);
         G.addEdge(i + 1, lp);
       }
-      if (re[i] === "(" || re[i] === ")" || re[i] === "*") {
+      if (i < M - 1 && re[i + 1] === "+") {
+        G.addEdge(i + 1, lp);
+      }
+      if (re[i] === "(" || re[i] === ")" || re[i] === "*" || re[i] === "+") {
         G.addEdge(i, i + 1);
       }
     }
