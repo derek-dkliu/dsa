@@ -5,7 +5,9 @@ import { BinaryStdIn, BinaryStdOut } from "../common/io.js";
 export class Huffman {
   static R = 256;
 
-  static compress(msg) {
+  static compress(input) {
+    if (!input instanceof BinaryStdIn) throw new ArgumentError("Illegal input");
+    const msg = input.toString();
     const freqs = this.countFreqs(msg);
     const root = this.buildTrie(freqs);
     const map = this.buildCode(root);

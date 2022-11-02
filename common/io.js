@@ -41,6 +41,7 @@ export class BinaryStdIn {
     while (!this.isEmpty()) {
       str += this.readChar();
     }
+    this.pos = 0;
     return str;
   }
 }
