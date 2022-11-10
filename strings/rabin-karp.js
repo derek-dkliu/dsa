@@ -1,3 +1,5 @@
+import Maths from "../exercises/maths.js";
+
 // Monte Carlo version:
 // *Always runs in linear time
 // *Extremely likely to return correct answer(with large random prime)
@@ -11,7 +13,7 @@ export class RabinKarp {
     this.pat = pat;
     this.M = pat.length;
     this.R = 256;
-    this.Q = 997;
+    this.Q = Maths.longRandomPrime(1000, 10000);
     // precompute R^(M-1) mod Q
     this.RM = 1;
     for (let i = 1; i <= this.M - 1; i++) {
@@ -57,3 +59,6 @@ export class RabinKarp {
     return h;
   }
 }
+
+const pattern = new RabinKarp("ABABC");
+console.log(pattern.search("ABCABABABABCA"));
