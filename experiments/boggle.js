@@ -1,5 +1,13 @@
 import { readFileSync } from "fs";
 
+// improvement
+// 1. reuse board to mark as visited
+// 2. store word in trie-node instead of boolean
+// 3. set word to null in trie-node to avoid duplicates instead of using hashset
+// 4. check board indices and visit mark before recursive calls
+
+// Time: max(O(l * wl), O(m * n * 3^wl)), where l is the length of the dictionary, wl is the average word length in the dictionary.
+// Space: O(l * wl), requried for building trie for the dictionary.
 class BoggleSolver {
   constructor(dictionary) {
     this.root = new Node();
@@ -16,7 +24,7 @@ class BoggleSolver {
   _put(node, key, d) {
     if (node === null) node = new Node();
     if (d === key.length) {
-      node.word = true;
+      node.word = key;
       return node;
     }
     const c = key.charCodeAt(d) - 65;
@@ -25,36 +33,30 @@ class BoggleSolver {
   }
 
   search(board) {
-    const results = new Set();
+    const results = [];
     const rows = board.length;
     const cols = board[0].length;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        this._search(this.root, board, i, j, "", results);
+        this._search(this.root, board, i, j, results);
       }
     }
     return [...results];
   }
 
-  _search(node, board, i, j, prefix, results) {
-    if (node === null) return;
-    if (node.word && prefix.length >= 3) results.add(prefix);
-    if (
-      i < 0 ||
-      i >= board.length ||
-      j < 0 ||
-      j >= board[0].length ||
-      board[i][j] === ""
-    ) {
-      return;
-    }
+  _search(node, board, i, j, results) {
     const ch = board[i][j];
-    board[i][j] = "";
-    const index = ch.charCodeAt(0) - 65;
-    let next = node.next[index];
-    if (next && ch.length === 2) {
-      next = next.next["U".charCodeAt(0) - 65];
+    node = node.next[ch.charCodeAt(0) - 65];
+    if (node && ch.length === 2) {
+      node = node.next["U".charCodeAt(0) - 65];
     }
+    if (node === null) return;
+    if (node.word !== null && node.word.length >= 3) {
+      results.push(node.word);
+      node.word = null;
+    }
+
+    board[i][j] = "";
     const neighbors = [
       [-1, -1],
       [-1, 0],
@@ -68,7 +70,15 @@ class BoggleSolver {
     for (const [r, c] of neighbors) {
       const row = i + r;
       const col = j + c;
-      this._search(next, board, row, col, prefix + ch, results);
+      if (
+        row >= 0 &&
+        row < board.length &&
+        col >= 0 &&
+        col < board[0].length &&
+        board[row][col] !== ""
+      ) {
+        this._search(node, board, row, col, results);
+      }
     }
     board[i][j] = ch;
   }
@@ -76,7 +86,7 @@ class BoggleSolver {
 
 class Node {
   constructor() {
-    this.word = false;
+    this.word = null;
     this.next = [];
     for (let i = 0; i < 26; i++) {
       this.next[i] = null;
