@@ -1,13 +1,13 @@
 class LongestPanlindromicSubstring {
-  static search(s) {
+  static search1a(s) {
     const N = s.length;
     const palin = [];
     for (let i = 0; i < N; i++) {
       palin[i] = [];
     }
     let max = 0;
-    let start = 0,
-      end = 0;
+    let start = 0;
+    let end = 0;
     for (let k = 0; k < N; k++) {
       for (let i = 0; i < N - k; i++) {
         palin[i][i + k] =
@@ -24,7 +24,7 @@ class LongestPanlindromicSubstring {
     return [start, end];
   }
 
-  static search2(s) {
+  static search1b(s) {
     const N = s.length;
     const even = [];
     const odd = [];
@@ -54,13 +54,61 @@ class LongestPanlindromicSubstring {
     return [start, end];
   }
 
-  static search3(s) {
+  static search2a(s) {
+    const N = s.length;
+    const palin = [];
+    let max = 0;
+    let start = 0;
+    let end = 0;
+    for (let i = N - 1; i >= 0; i--) {
+      palin[i] = [];
+      for (let j = i; j < N; j++) {
+        if (i === j) {
+          palin[i][j] = true;
+        } else {
+          palin[i][j] =
+            (j === i + 1 || palin[i + 1][j - 1]) && s.charAt(i) === s.charAt(j);
+        }
+        if (palin[i][j] && j - i + 1 > max) {
+          max = j - i + 1;
+          start = i;
+          end = j;
+        }
+      }
+    }
+    return [start, end];
+  }
+
+  static search2b(s) {
+    const N = s.length;
+    const palin = [];
+    let max = 0;
+    let start = 0;
+    let end = 0;
+    let i = N - 1;
+    while (i >= 0) {
+      for (let j = N - 1; j >= i; j--) {
+        palin[j] =
+          j === i ||
+          ((j === i + 1 || palin[j - 1]) && s.charAt(i) === s.charAt(j));
+        if (palin[j] && j - i + 1 > max) {
+          max = j - i + 1;
+          start = i;
+          end = j;
+        }
+      }
+      i--;
+    }
+    return [start, end];
+  }
+
+  static expandAroundCenter(s) {
     const N = s.length;
     let start = 0;
     let end = 0;
     for (let i = 0; i < N; i++) {
-      const len1 = this.expandAroundCenter(s, i, i);
-      const len2 = this.expandAroundCenter(s, i, i + 1);
+      const len1 = this._expandAroundCenter(s, i, i);
+      const len2 = this._expandAroundCenter(s, i, i + 1);
       const len = Math.max(len1, len2);
       if (len > end - start + 1) {
         if (len1 > len2) {
@@ -75,7 +123,7 @@ class LongestPanlindromicSubstring {
     return [start, end];
   }
 
-  static expandAroundCenter(s, left, right) {
+  static _expandAroundCenter(s, left, right) {
     let L = left;
     let R = right;
     while (L >= 0 && R < s.length && s.charAt(L) === s.charAt(R)) {
@@ -150,9 +198,11 @@ const cases = [
 for (const s of cases) {
   console.log(
     s,
-    LongestPanlindromicSubstring.search(s),
-    LongestPanlindromicSubstring.search2(s),
-    LongestPanlindromicSubstring.search3(s),
+    LongestPanlindromicSubstring.search1a(s),
+    LongestPanlindromicSubstring.search1b(s),
+    LongestPanlindromicSubstring.search2a(s),
+    LongestPanlindromicSubstring.search2b(s),
+    LongestPanlindromicSubstring.expandAroundCenter(s),
     LongestPanlindromicSubstring.manacher(s)
   );
 }

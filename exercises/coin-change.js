@@ -1,9 +1,10 @@
 class CoinChange {
+  // Time:  O(n^m), where n is amount, and m is number of coins
+  // Space: O(m)
   static count1(coins, amount) {
     coins.sort((a, b) => b - a);
     return this._count1(amount, coins, 0, new Map());
   }
-
   static _count1(amount, coins, start, memo) {
     if (amount === 0) return 0;
     const key = amount + "-" + start;
@@ -23,18 +24,18 @@ class CoinChange {
     return -1;
   }
 
+  // Time:  O(m*n), would be O(m^n) without memoization
+  // Space: O(n)
   static count2(coins, amount) {
     return this._count2(amount, coins, new Map());
   }
-
   static _count2(amount, coins, memo) {
     if (amount === 0) return 0;
     if (memo.has(amount)) return memo.get(amount);
     let min = Infinity;
     for (const coin of coins) {
-      const remaining = amount - coin;
-      if (remaining >= 0) {
-        const res = this._count2(remaining, coins, memo);
+      if (coin <= amount) {
+        const res = this._count2(amount - coin, coins, memo);
         if (res !== -1 && res + 1 < min) {
           min = res + 1;
         }
@@ -45,6 +46,8 @@ class CoinChange {
     return ans;
   }
 
+  // Time:  O(m*n)
+  // Space: O(n)
   static count3(coins, amount) {
     const dp = [0];
     for (let i = 1; i <= amount; i++) {
