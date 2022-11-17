@@ -46,9 +46,28 @@ class CoinChange {
     return ans;
   }
 
+  // Time:  O(m*n), would be O(2^(m+n)) without memoization
+  // Space: O(m*n)
+  static count3(coins, amount) {
+    const ans = this._count3(amount, coins, 0, new Map());
+    return ans === Infinity ? -1 : ans;
+  }
+  static _count3(amount, coins, index, memo) {
+    if (amount === 0) return 0;
+    if (amount < 0 || index === coins.length) return Infinity;
+    const key = amount + "-" + index;
+    if (memo.has(key)) return memo.get(key);
+    const ans = Math.min(
+      this._count3(amount, coins, index + 1, memo),
+      1 + this._count3(amount - coins[index], coins, index, memo)
+    );
+    memo.set(key, ans);
+    return ans;
+  }
+
   // Time:  O(m*n)
   // Space: O(n)
-  static count3(coins, amount) {
+  static count4(coins, amount) {
     const dp = [0];
     for (let i = 1; i <= amount; i++) {
       dp[i] = Infinity;
@@ -60,6 +79,23 @@ class CoinChange {
       if (dp[i] === Infinity) dp[i] = -1;
     }
     return dp[amount];
+  }
+
+  // Time:  O(m*n)
+  // Space: O(n)
+  static count5(coins, amount) {
+    const dp = [0];
+    for (let i = coins.length - 1; i >= 0; i--) {
+      for (let j = 1; j <= amount; j++) {
+        if (i === coins.length - 1) {
+          dp[j] = Infinity;
+        }
+        if (coins[i] <= j) {
+          dp[j] = Math.min(dp[j], 1 + dp[j - coins[i]]);
+        }
+      }
+    }
+    return dp[amount] === Infinity ? -1 : dp[amount];
   }
 
   static search1(coins, amount) {
@@ -163,7 +199,7 @@ const cases = [
   [[2], 3],
   [[1], 0],
   [[2, 3, 5], 14],
-  [[411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422], 9864],
+  // [[411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422], 9864],
 ];
 for (const [coins, amount] of cases) {
   console.log(coins, amount);
@@ -173,5 +209,7 @@ for (const [coins, amount] of cases) {
   console.log("c1:", CoinChange.count1(coins, amount));
   console.log("c2:", CoinChange.count2(coins, amount));
   console.log("c3:", CoinChange.count3(coins, amount));
+  console.log("c4:", CoinChange.count4(coins, amount));
+  console.log("c5:", CoinChange.count5(coins, amount));
   console.log("--------------");
 }

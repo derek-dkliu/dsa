@@ -1,4 +1,6 @@
 class CoinChange2 {
+  // Time:  O(m^n)
+  // Space: O(n)
   static count1a(coins, amount) {
     return this._count1a(coins, amount, 0);
   }
@@ -56,7 +58,7 @@ class CoinChange2 {
     return dp[amount][0];
   }
 
-  // Time:  O(m^n)
+  // Time:  O(2^(m+n))
   // Space: O(n)
   static count2a(coins, amount) {
     return this._count2a(coins, amount, 0);
@@ -65,8 +67,8 @@ class CoinChange2 {
     if (amount === 0) return 1;
     if (amount < 0 || index === coins.length) return 0;
     const count =
-      this._count2a(coins, amount - coins[index], index) +
-      this._count2a(coins, amount, index + 1);
+      this._count2a(coins, amount, index + 1) +
+      this._count2a(coins, amount - coins[index], index);
     return count;
   }
 
@@ -81,8 +83,8 @@ class CoinChange2 {
     const key = amount + "-" + index;
     if (memo.has(key)) return memo.get(key);
     const count =
-      this._count2b(coins, amount - coins[index], index, memo) +
-      this._count2b(coins, amount, index + 1, memo);
+      this._count2b(coins, amount, index + 1, memo) +
+      this._count2b(coins, amount - coins[index], index, memo);
     memo.set(key, count);
     return count;
   }

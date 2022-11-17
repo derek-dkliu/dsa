@@ -1,6 +1,7 @@
 import { Queue } from "../structures/queue.js";
 
 class Combination {
+  // Binary counting order
   static generate(n) {
     const result = [];
     const seq = "abcdefghijklmnopqrstuvwxyz".slice(0, n);
@@ -17,6 +18,7 @@ class Combination {
     this._generate(curr + seq[index], seq, index + 1, result);
   }
 
+  // Lexicographic order
   static generate2(n) {
     const result = [];
     const seq = "abcdefghijklmnopqrstuvwxyz".slice(0, n);
@@ -31,6 +33,7 @@ class Combination {
     }
   }
 
+  // Order by length then lexicographic order
   static generate3(n) {
     const result = [];
     const seq = "abcdefghijklmnopqrstuvwxyz".slice(0, n);
@@ -61,8 +64,8 @@ class CombinationK {
       result.push(curr);
       return;
     }
-    this._generate(curr + seq[index], seq, k - 1, index + 1, result);
     this._generate(curr, seq, k, index + 1, result);
+    this._generate(curr + seq[index], seq, k - 1, index + 1, result);
   }
 
   static generate2(n, k) {

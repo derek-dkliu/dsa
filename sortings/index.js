@@ -1,5 +1,6 @@
 import { sequence, randomSeq, isSorted } from "../common/helpers.js";
 import { banner } from "../common/utils.js";
+import Bubble from "./bubble.js";
 import Selection from "./selection.js";
 import Insertion from "./insertion.js";
 import Shellsort from "./shellsort.js";
@@ -23,6 +24,7 @@ export default function sortings(size = 20) {
 
   cases.forEach((seq, index) => {
     banner(`CASE ${index + 1}:`.padEnd(10) + seq.toString());
+    console.log("bubblesort\t", isSorted(Bubble.sort(seq)));
     console.log("selection\t", isSorted(Selection.sort(seq)));
     console.log("insertion\t", isSorted(Insertion.sort(seq)));
     // console.log("index sort\t", Insertion.indexSort(seq).toString());
